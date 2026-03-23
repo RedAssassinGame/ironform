@@ -86,7 +86,7 @@ const ATHLETE = {
     {text:"Slim, defined legs — not blocky",priority:true},
     {text:"V-taper — wide back, capped shoulders, narrow waist",priority:true},
     {text:"Veiny forearms — sub-10% BF reveals vascularity",priority:true},
-    {text:"Remove lower pubic fat — spot reduction impossible: goes at 10–12% BF only",priority:true},
+    {text:"Remove lower fat — spot reduction impossible: goes at 10–12% BF only",priority:true},
     {text:"Full chest development",priority:false},
     {text:"Arm size — bicep peak, tricep horseshoe",priority:false},
     {text:"10% BF revealing everything",priority:false},
@@ -563,9 +563,9 @@ function ProfilePage() {
         <div style={{fontSize:8,letterSpacing:1,color:"#F97316",marginBottom:6}}>PRIMARY FOCUS</div>
         <div style={{display:"flex",flexDirection:"column",gap:5,marginBottom:10}}>
           {ATHLETE.aestheticGoals.filter(g=>g.priority).map((g,i) => (
-            <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",background:g.text.includes("pubic")?"rgba(96,165,250,0.06)":"rgba(249,115,22,0.06)",border:`1px solid ${g.text.includes("pubic")?"rgba(96,165,250,0.15)":"rgba(249,115,22,0.15)"}`,borderRadius:7,padding:"8px 10px"}}>
-              <div style={{width:5,height:5,borderRadius:"50%",background:g.text.includes("pubic")?"#60A5FA":"#F97316",flexShrink:0,marginTop:3}}/>
-              <span style={{fontSize:10,color:g.text.includes("pubic")?"#9CA3AF":"#F1F5F9"}}>{g.text}</span>
+            <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",background:g.text.includes(" ")?"rgba(96,165,250,0.06)":"rgba(249,115,22,0.06)",border:`1px solid ${g.text.includes(" ")?"rgba(96,165,250,0.15)":"rgba(249,115,22,0.15)"}`,borderRadius:7,padding:"8px 10px"}}>
+              <div style={{width:5,height:5,borderRadius:"50%",background:g.text.includes(" ")?"#60A5FA":"#F97316",flexShrink:0,marginTop:3}}/>
+              <span style={{fontSize:10,color:g.text.includes(" ")?"#9CA3AF":"#F1F5F9"}}>{g.text}</span>
             </div>
           ))}
         </div>
