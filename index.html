@@ -60,9 +60,9 @@ button{cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .15s
 <script type="text/babel">
 const {useState} = React;
 
-const PEAK_MS = new Date("2025-07-04").getTime();
-const FULL_MS = new Date("2025-08-08").getTime();
-const START_MS = new Date("2025-03-21").getTime();
+const PEAK_MS = new Date("2026-07-04").getTime();
+const FULL_MS = new Date("2026-08-08").getTime();
+const START_MS = new Date("2026-03-21").getTime();
 
 const WM = [
   {label:"HYPERTROPHY",rpe:"6–7",scheme:"1TS×10+3BO×8",vol:"HIGH",c:"#4ADE80"},
@@ -361,10 +361,10 @@ const DAYS = [
 ];
 
 const BLOCKS = [
-  {label:"21 Mar – 25 Apr",name:"BLOCK 1",weeks:"Wk 1–5",focus:"Cut + Base Strength",bf:"20%→18%",wt:"88→85kg",c:"#4ADE80"},
-  {label:"26 Apr – 30 May",name:"BLOCK 2",weeks:"Wk 6–10",focus:"Cut + Strength Build",bf:"18%→15%",wt:"85→82kg",c:"#FBBF24"},
-  {label:"31 May – 4 Jul",name:"BLOCK 3",weeks:"Wk 11–15",focus:"Cut + Peak Aesthetics",bf:"15%→12%",wt:"82→79kg",c:"#F97316",peak:true},
-  {label:"5 Jul – 8 Aug",name:"BLOCK 4",weeks:"Wk 16–20",focus:"Summer Shred + PRs",bf:"12%→10%",wt:"79→77kg",c:"#F43F5E"},
+  {label:"21 Mar – 25 Apr 2026",name:"BLOCK 1",weeks:"Wk 1–5",focus:"Cut + Base Strength",bf:"20%→18%",wt:"88→85kg",c:"#4ADE80"},
+  {label:"26 Apr – 30 May 2026",name:"BLOCK 2",weeks:"Wk 6–10",focus:"Cut + Strength Build",bf:"18%→15%",wt:"85→82kg",c:"#FBBF24"},
+  {label:"31 May – 4 Jul 2026",name:"BLOCK 3",weeks:"Wk 11–15",focus:"Cut + Peak Aesthetics",bf:"15%→12%",wt:"82→79kg",c:"#F97316",peak:true},
+  {label:"5 Jul – 8 Aug 2026",name:"BLOCK 4",weeks:"Wk 16–20",focus:"Summer Shred + PRs",bf:"12%→10%",wt:"79→77kg",c:"#F43F5E"},
 ];
 
 const LIFTS = {bench:{cur:105,goal:140},deadlift:{cur:220,goal:250},squat:{cur:170,goal:200}};
@@ -444,7 +444,7 @@ function ProfilePage(){
     {/* HERO */}
     <div style={{background:"linear-gradient(135deg,#111,#0E0E0E,#161616)",border:"1px solid #1E1E1E",borderRadius:14,padding:"18px 16px",marginBottom:10,position:"relative",overflow:"hidden"}}>
       <div style={{position:"absolute",top:-20,right:-20,width:150,height:150,borderRadius:"50%",background:"radial-gradient(circle,rgba(249,115,22,0.08),transparent 70%)"}}/>
-      <div style={{fontSize:8,letterSpacing:3,color:"#F97316",marginBottom:2}}>STARTED 21 MAR 2025</div>
+      <div style={{fontSize:8,letterSpacing:3,color:"#F97316",marginBottom:2}}>STARTED 21 MAR 2026</div>
       <div className="bb" style={{fontSize:28,letterSpacing:3,color:"#F1F5F9",lineHeight:1,marginBottom:2}}>MAD AESTHETIC BY SUMMER</div>
       <div style={{fontSize:9,color:"#6B7280",marginBottom:14}}>19yo Indian male · Robotics Engineering</div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
