@@ -2,69 +2,207 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="theme-color" content="#080808"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 <meta name="apple-mobile-web-app-title" content="IRONFORM"/>
 <title>IRONFORM</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Space Grotesk',sans-serif;background:#080808;color:#E5E7EB;min-height:100vh;overscroll-behavior:none}
-button{cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .15s}
+:root{--orange:#F97316;--red:#F43F5E;--green:#4ADE80;--yellow:#FBBF24;--blue:#60A5FA;--cyan:#22D3EE;--purple:#A78BFA;--teal:#34D399;--bg:#080808;--bg2:#0E0E0E;--bg3:#141414;--border:#1A1A1A;--border2:#2A2A2A;--text:#E5E7EB;--muted:#6B7280;--dim:#4B5563;--dark:#2A2A2A}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overscroll-behavior:none}
+button{cursor:pointer;font-family:inherit;border:none;transition:all .15s;-webkit-tap-highlight-color:transparent}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:#111}::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
-.bb{font-family:'Bebas Neue',cursive}
-#lock{position:fixed;inset:0;background:#080808;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
+.bb{font-family:Impact,'Arial Black',sans-serif;letter-spacing:1px}
+
+/* LOCK */
+#lock{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
 #lock.gone{display:none}
-#pw{background:#141414;border:1px solid #2A2A2A;border-radius:10px;color:#F1F5F9;font-family:'Space Grotesk',sans-serif;font-size:20px;letter-spacing:6px;padding:14px 20px;text-align:center;width:100%;max-width:280px;outline:none;margin-bottom:12px}
-#pw:focus{border-color:#F97316}
-#pwbtn{background:#F97316;border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;padding:13px;width:100%;max-width:280px}
-#pwerr{color:#F43F5E;font-size:11px;letter-spacing:1px;margin-top:6px;min-height:16px;text-align:center}
+#pw-title{font-family:Impact,'Arial Black',sans-serif;font-size:48px;letter-spacing:6px;color:var(--orange);line-height:1;margin-bottom:4px}
+#pw-sub{font-size:9px;letter-spacing:3px;color:var(--dim);margin-bottom:44px}
+#pw{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:inherit;font-size:20px;letter-spacing:6px;padding:14px 20px;text-align:center;width:100%;max-width:280px;outline:none;margin-bottom:12px}
+#pw:focus{border-color:var(--orange)}
+#pwbtn{background:var(--orange);border-radius:10px;color:#000;font-family:Impact,'Arial Black',sans-serif;font-size:22px;letter-spacing:3px;padding:13px;width:100%;max-width:280px}
+#pwerr{color:var(--red);font-size:11px;letter-spacing:1px;margin-top:6px;min-height:16px;text-align:center}
+
+/* LAYOUT */
+#app{display:none}
+#app.show{display:block}
+#header{background:#0C0C0C;border-bottom:1px solid var(--border);padding:0 14px;position:sticky;top:0;z-index:100}
+#header-top{display:flex;justify-content:space-between;align-items:center;padding:12px 0 8px}
+#logo{font-family:Impact,'Arial Black',sans-serif;font-size:32px;letter-spacing:5px;color:var(--orange);line-height:1}
+#logo-sub{font-size:7px;letter-spacing:2px;color:var(--dim);margin-top:2px}
+#tabs{display:flex;border-top:1px solid var(--border)}
+.tab-btn{padding:9px 14px;background:none;color:var(--dim);font-size:11px;letter-spacing:1px;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:Impact,'Arial Black',sans-serif}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange)}
+#content{padding:14px 12px;max-width:560px;margin:0 auto}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
+.card-cyan{background:rgba(34,211,238,0.04);border:1px solid rgba(34,211,238,0.15)}
+.card-green{background:rgba(52,211,153,0.04);border:1px solid rgba(52,211,153,0.15)}
+.section-title{font-size:9px;letter-spacing:2px;color:var(--dim);margin-bottom:8px}
+
+/* HERO */
+#hero{background:linear-gradient(135deg,#111,#0E0E0E,#161616);border:1px solid #1E1E1E;border-radius:14px;padding:18px 16px;margin-bottom:10px;position:relative;overflow:hidden}
+#hero::after{content:'';position:absolute;top:-20px;right:-20px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,.08),transparent 70%);pointer-events:none}
+.countdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.countdown-box{border-radius:10px;padding:12px 8px;text-align:center}
+.countdown-num{font-family:Impact,'Arial Black',sans-serif;font-size:44px;line-height:1}
+.countdown-label{font-size:8px;letter-spacing:1px;margin-top:2px}
+.countdown-sub{font-size:7px;color:var(--dim);margin-top:1px}
+.progress-bar-wrap{margin-bottom:10px}
+.progress-labels{display:flex;justify-content:space-between;margin-bottom:4px;font-size:7px;color:var(--dim)}
+.progress-track{background:#1A1A1A;border-radius:99px;height:7px;overflow:hidden}
+.progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--yellow),var(--orange))}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:7px 4px;text-align:center}
+.stat-label{font-size:7px;color:var(--dim)}
+.stat-val{font-family:Impact,'Arial Black',sans-serif;font-size:14px;color:var(--text);margin-top:1px}
+
+/* LIFTS */
+.lift-row{margin-bottom:12px}
+.lift-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.lift-name{font-family:Impact,'Arial Black',sans-serif;font-size:12px;letter-spacing:1px}
+.lift-cur{font-family:Impact,'Arial Black',sans-serif;font-size:20px;color:var(--text)}
+.lift-goal{font-family:Impact,'Arial Black',sans-serif;font-size:20px}
+.lift-pct{font-size:7px;color:var(--dim);text-align:right;margin-top:2px}
+
+/* BLOCKS */
+.block-row{border-radius:8px;padding:10px 12px;margin-bottom:6px}
+.block-name{font-family:Impact,'Arial Black',sans-serif;font-size:14px;letter-spacing:1px}
+.block-focus{font-size:10px;color:var(--text);font-weight:600}
+.block-label{font-size:8px;color:var(--dim);margin-top:1px}
+
+/* MILESTONES */
+.milestone-row{background:var(--bg3);border-radius:7px;padding:8px 10px;margin-bottom:5px;display:flex;gap:10px;align-items:center}
+.milestone-icon{font-size:18px;flex-shrink:0}
+.milestone-label{font-size:10px;color:var(--text);font-weight:600}
+.milestone-target{font-size:8px;margin-top:1px}
+
+/* GOAL CHIPS */
+.goal-chip{display:flex;gap:8px;align-items:flex-start;border-radius:7px;padding:8px 10px;margin-bottom:4px}
+.goal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.goal-text{font-size:10px}
+
+/* CALISTHENICS TIER */
+.tier-item{border-left:3px solid;border-radius:7px;padding:8px 10px;margin-bottom:4px;display:flex;gap:10px}
+
+/* SKILL PROG */
+.skill-prog{border-left:3px solid;border-radius:8px;padding:10px 12px;margin-bottom:7px}
+.skill-name{font-family:Impact,'Arial Black',sans-serif;font-size:13px;letter-spacing:1px;margin-bottom:5px}
+.skill-steps{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px}
+.skill-step{padding:2px 6px;background:var(--bg);border:1px solid var(--border2);border-radius:4px;font-size:8px;color:#9CA3AF}
+.skill-rule{font-size:8px}
+
+/* NUTRITION */
+.nut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px}
+.nut-box{background:#0A0A0A;border:1px solid var(--border);border-radius:7px;padding:8px 6px;text-align:center}
+.nut-label{font-size:7px;color:var(--dim)}
+.nut-val{font-family:Impact,'Arial Black',sans-serif;font-size:12px;color:var(--cyan);margin-top:2px}
+.cal-week{margin-bottom:12px}
+.cal-title{font-family:Impact,'Arial Black',sans-serif;font-size:11px;letter-spacing:1px;margin-bottom:5px}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-day{background:var(--bg3);border-radius:5px;padding:5px 2px;text-align:center}
+.cal-d{font-family:Impact,'Arial Black',sans-serif;font-size:9px}
+.cal-s{font-size:6px;color:var(--dim);margin:1px 0}
+.cal-c{font-family:Impact,'Arial Black',sans-serif;font-size:11px;color:var(--text)}
+
+/* PROGRAM */
+.week-selector{margin-bottom:14px}
+.week-btns{display:flex;gap:5px;margin-bottom:6px}
+.week-btn{flex:1;padding:8px 2px;border-radius:7px;display:flex;flex-direction:column;align-items:center;gap:1px;border-top:3px solid}
+.week-btn-num{font-family:Impact,'Arial Black',sans-serif;font-size:18px}
+.week-btn-label{font-size:6px;letter-spacing:0.5px}
+.week-meta{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;display:flex;gap:12px;flex-wrap:wrap}
+.week-meta-item .wm-label{font-size:7px;color:var(--dim)}
+.week-meta-item .wm-val{font-family:Impact,'Arial Black',sans-serif;font-size:14px;letter-spacing:1px}
+.day-tabs{display:flex;gap:5px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.day-tab{padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg2);color:var(--muted);white-space:nowrap;flex-shrink:0;font-family:Impact,'Arial Black',sans-serif;font-size:12px;letter-spacing:1px}
+.day-tab.active{border-color:var(--orange);background:rgba(249,115,22,0.1);color:var(--orange)}
+.day-header{background:linear-gradient(135deg,#111,#161616);border:1px solid #1E1E1E;border-radius:11px;padding:14px;margin-bottom:8px}
+.day-name{font-family:Impact,'Arial Black',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text);line-height:1}
+.day-sub{font-size:10px;color:#9CA3AF;margin-top:3px}
+.day-tag{padding:3px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;font-size:7px;letter-spacing:1px;color:var(--orange);flex-shrink:0}
+.day-muscles{font-size:8px;color:var(--dim);margin-bottom:6px}
+.day-goals{display:flex;flex-wrap:wrap;gap:4px}
+.day-goal-chip{padding:2px 8px;background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:99px;font-size:8px;color:var(--orange)}
+.ex-card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:12px 13px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;margin-bottom:7px}
+.ex-type{padding:2px 6px;border-radius:4px;font-size:7px;font-weight:700;letter-spacing:1px;display:inline-block;margin-bottom:4px}
+.ex-name{font-weight:600;font-size:13px;color:var(--text);margin-left:6px}
+.ex-note{font-size:10px;color:var(--muted);line-height:1.6;margin-top:4px}
+.sets-box{background:#161616;border:1px solid #252525;border-radius:7px;padding:7px 8px;text-align:center;min-width:64px}
+.sets-num{font-family:Impact,'Arial Black',sans-serif;font-size:17px;line-height:1;letter-spacing:1px}
+.sets-label{font-size:7px;color:var(--dim);letter-spacing:1px;margin-top:1px}
+.legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.legend-item{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.legend-dot{width:6px;height:6px;border-radius:2px;flex-shrink:0}
+.sched{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:8px}
+.sched-days{display:flex;gap:4px;margin-top:7px}
+.sched-day{flex:1;text-align:center;padding:6px 2px;background:var(--bg3);border-radius:5px;border:1px solid var(--border)}
+.sched-d{font-family:Impact,'Arial Black',sans-serif;font-size:10px;color:var(--orange);letter-spacing:1px}
+.sched-s{font-size:6px;color:var(--muted);margin-top:1px}
 </style>
 </head>
 <body>
 
 <div id="lock">
-  <div class="bb" style="font-size:44px;letter-spacing:6px;color:#F97316;line-height:1;margin-bottom:4px">IRONFORM</div>
-  <div style="font-size:9px;letter-spacing:3px;color:#4B5563;margin-bottom:44px">YOUR TRAINING SYSTEM</div>
+  <div id="pw-title">IRONFORM</div>
+  <div id="pw-sub">YOUR TRAINING SYSTEM</div>
   <input id="pw" type="password" placeholder="PASSWORD" autocomplete="off"/>
   <button id="pwbtn">UNLOCK</button>
   <div id="pwerr"></div>
 </div>
 
-<div id="app"></div>
+<div id="app">
+  <div id="header">
+    <div id="header-top">
+      <div>
+        <div id="logo">IRONFORM</div>
+        <div id="logo-sub">AESTHETICS · POWERLIFTING · STREETLIFTING · CALISTHENICS</div>
+      </div>
+    </div>
+    <div id="tabs">
+      <button class="tab-btn active" onclick="showTab('profile')">🎯 PROFILE &amp; GOALS</button>
+      <button class="tab-btn" onclick="showTab('program')">📋 PROGRAM</button>
+    </div>
+  </div>
+  <div id="content"></div>
+</div>
 
 <script>
+// PASSWORD
 (function(){
-  var PW = 'Raiuga';
+  var PW='Raiuga';
   function check(){
-    var v = document.getElementById('pw').value;
-    if(v === PW){
+    var v=document.getElementById('pw').value;
+    if(v===PW){
       document.getElementById('lock').classList.add('gone');
+      document.getElementById('app').classList.add('show');
       try{sessionStorage.setItem('if','1')}catch(e){}
+      init();
     } else {
-      document.getElementById('pwerr').textContent = 'INCORRECT PASSWORD';
-      document.getElementById('pw').value = '';
+      document.getElementById('pwerr').textContent='INCORRECT PASSWORD';
+      document.getElementById('pw').value='';
     }
   }
-  document.getElementById('pwbtn').addEventListener('click', check);
-  document.getElementById('pw').addEventListener('keydown', function(e){ if(e.key==='Enter') check(); });
-  try{ if(sessionStorage.getItem('if')==='1') document.getElementById('lock').classList.add('gone'); }catch(e){}
+  document.getElementById('pwbtn').addEventListener('click',check);
+  document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')check()});
+  try{
+    if(sessionStorage.getItem('if')==='1'){
+      document.getElementById('lock').classList.add('gone');
+      document.getElementById('app').classList.add('show');
+      document.addEventListener('DOMContentLoaded',init);
+    }
+  }catch(e){}
 })();
-</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-<script type="text/babel">
-const {useState} = React;
+// DATA
+var PEAK_MS=new Date("2026-07-04").getTime();
+var FULL_MS=new Date("2026-08-08").getTime();
+var START_MS=new Date("2026-03-21").getTime();
 
-const PEAK_MS = new Date("2026-07-04").getTime();
-const FULL_MS = new Date("2026-08-08").getTime();
-const START_MS = new Date("2026-03-21").getTime();
-
-const WM = [
+var WM=[
   {label:"HYPERTROPHY",rpe:"6–7",scheme:"1TS×10+3BO×8",vol:"HIGH",c:"#4ADE80"},
   {label:"STRENGTH",rpe:"8–9",scheme:"1TS×5+2BO×5",vol:"MODERATE",c:"#FBBF24"},
   {label:"CNS ADAPT",rpe:"9–10",scheme:"1TS×2+2BO×3",vol:"LOW",c:"#F97316"},
@@ -72,7 +210,7 @@ const WM = [
   {label:"PR TEST",rpe:"10",scheme:"Pyramid→1RM",vol:"LOW",c:"#F43F5E"},
 ];
 
-const TM = {
+var TM={
   main:{label:"MAIN LIFT",bg:"#F97316",fg:"#000"},
   streetlifting:{label:"STREETLIFT",bg:"#22D3EE",fg:"#000"},
   compound:{label:"COMPOUND",bg:"#A78BFA",fg:"#000"},
@@ -80,22 +218,85 @@ const TM = {
   accessory:{label:"ACCESSORY",bg:"#2A2A2A",fg:"#9CA3AF"},
 };
 
-const DAYS = [
+var BLOCKS=[
+  {label:"21 Mar – 25 Apr 2026",name:"BLOCK 1",weeks:"Wk 1–5",focus:"Cut + Base Strength",bf:"20%→18%",wt:"88→85kg",c:"#4ADE80"},
+  {label:"26 Apr – 30 May 2026",name:"BLOCK 2",weeks:"Wk 6–10",focus:"Cut + Strength Build",bf:"18%→15%",wt:"85→82kg",c:"#FBBF24"},
+  {label:"31 May – 4 Jul 2026",name:"BLOCK 3",weeks:"Wk 11–15",focus:"Cut + Peak Aesthetics",bf:"15%→12%",wt:"82→79kg",c:"#F97316",peak:true},
+  {label:"5 Jul – 8 Aug 2026",name:"BLOCK 4",weeks:"Wk 16–20",focus:"Summer Shred + PRs",bf:"12%→10%",wt:"79→77kg",c:"#F43F5E"},
+];
+
+var LIFTS={bench:{cur:105,goal:140,c:"#F97316"},deadlift:{cur:220,goal:250,c:"#F43F5E"},squat:{cur:170,goal:200,c:"#FBBF24"}};
+
+var MILESTONES=[
+  {icon:"⚡",label:"First Strict Muscle-up",target:"Block 1–2",lift:false},
+  {icon:"💪",label:"Bench: 105→120kg",target:"Block 2",lift:true},
+  {icon:"📐",label:"Full L-sit 25s+",target:"Block 2",lift:false},
+  {icon:"🏋️",label:"Deadlift: 220→235kg",target:"Block 2",lift:true},
+  {icon:"🦵",label:"Squat: 170→185kg",target:"Block 2–3",lift:true},
+  {icon:"🔙",label:"Back Lever held",target:"Block 3",lift:false},
+  {icon:"👀",label:"Visible Abs (12% BF)",target:"Block 3",lift:false},
+  {icon:"💪",label:"Bench: 120→140kg",target:"Block 3–4",lift:true},
+  {icon:"🏋️",label:"Deadlift: 235→250kg",target:"Block 4",lift:true},
+  {icon:"🦵",label:"Squat: 185→200kg",target:"Block 4",lift:true},
+  {icon:"🔥",label:"10% BF — Full V-Taper + Demon Back",target:"Block 4/Summer",lift:false},
+];
+
+var AGOALS=[
+  {text:"Demon back — erector definition, lat spread, Christmas tree",pri:true},
+  {text:"Boulder shoulders — all 3 delt heads, 3D roundness",pri:true},
+  {text:"Visible abs and oblique lines",pri:true},
+  {text:"Slim, defined legs — not blocky",pri:true},
+  {text:"V-taper — wide back, capped shoulders, narrow waist",pri:true},
+  {text:"Veiny forearms — sub-10% BF reveals vascularity",pri:true},
+  {text:"Lower abdominal definition — training builds muscle now, reveals at 10–12% BF",pri:true},
+  {text:"Full chest development",pri:false},
+  {text:"Arm size — bicep peak, tricep horseshoe",pri:false},
+  {text:"10% BF revealing everything",pri:false},
+];
+
+var CGOALS=[
+  {icon:"⚡",label:"Strict Muscle-up",cur:"Can't yet",tgt:"Block 1–2",tier:1},
+  {icon:"📐",label:"Full L-sit (25s+)",cur:"Can't yet",tgt:"Block 1–2",tier:1},
+  {icon:"🔙",label:"Back Lever",cur:"Can't yet",tgt:"Block 2",tier:2},
+  {icon:"🤸",label:"Freestanding Handstand",cur:"Can't yet",tgt:"Block 2",tier:2},
+  {icon:"⬆️",label:"Front Lever",cur:"Can't yet",tgt:"Block 3",tier:3},
+  {icon:"🐦",label:"Human Flag",cur:"Can't yet",tgt:"Block 3–4",tier:3},
+  {icon:"🌟",label:"Planche",cur:"Can't yet",tgt:"Long-term",tier:4},
+];
+
+var CPROG=[
+  {skill:"Muscle-up",c:"#22D3EE",steps:["Band chest-to-bar","Strict chest-to-bar","Band MU","Strict MU","Weighted MU"],rule:"5 clean reps, 2 in reserve"},
+  {skill:"L-sit → Front Lever",c:"#34D399",steps:["Shoulder depression hold","Tuck L-sit 10s","One leg extend","Full L-sit 15s+","Tuck front lever 5s","Adv tuck FL","Full front lever"],rule:"Hold 8–10s comfortably"},
+  {skill:"Back Lever",c:"#A78BFA",steps:["Inverted hang","Skin the cat","Tuck 5s","Adv tuck 5s","One leg extended","Half-lay","Full back lever"],rule:"8–10s hold no strain"},
+  {skill:"Handstand",c:"#FBBF24",steps:["Chest-to-wall 30s","Heel-to-wall 30s","Kick-up attempts","Freestanding 2–3s","Freestanding 5s","Freestanding 10s+"],rule:"Consistent across 3+ attempts"},
+  {skill:"Human Flag",c:"#F97316",steps:["Tuck flag 3s","Tuck flag 5s","One leg 3s","Straddle","Full flag"],rule:"5s clean hold, controlled entry/exit"},
+  {skill:"Dragon Flag",c:"#F43F5E",steps:["Tuck negatives 3s","Full negatives 5s","Eccentric only","Full reps"],rule:"5 clean reps current variation"},
+];
+
+var CALS=[
+  ["W1 HYPERTROPHY","#4ADE80",[["MON","D1","2700"],["TUE","D2","2700"],["WED","D3","2800"],["THU","REST","2000"],["FRI","D4","2600"],["SAT","D5","2600"],["SUN","REST","2000"]],"Full deficit. Legs day highest — biggest burn."],
+  ["W2 STRENGTH","#FBBF24",[["MON","D1","2700"],["TUE","D2","2700"],["WED","D3","2800"],["THU","REST","2000"],["FRI","D4","2600"],["SAT","D5","2600"],["SUN","REST","2000"]],"Full deficit. Lower volume so rest days hit harder."],
+  ["W3 CNS ADAPT","#F97316",[["MON","D1","2900"],["TUE","D2","2900"],["WED","D3","2950"],["THU","REST","2200"],["FRI","D4","2850"],["SAT","D5","2850"],["SUN","REST","2200"]],"Near maintenance. CNS sessions need fuel. Does NOT add fat."],
+  ["W4 DELOAD","#60A5FA",[["MON","D1","2400"],["TUE","D2","2400"],["WED","D3","2400"],["THU","REST","1900"],["FRI","D4","2400"],["SAT","D5","2400"],["SUN","REST","1900"]],"Push deficit hardest. Lowest training demand."],
+  ["W5 PR TEST","#F43F5E",[["SUN","PRE","2950"],["MON","BENCH","2950"],["TUE","DL","2950"],["WED","SQ","2950"],["THU","REST","2000"],["FRI","D4","2600"],["SAT","D5","2600"]],"Maintenance on PR days = glycogen loaded = new 1RM."],
+];
+
+var DAYS=[
   {id:1,name:"PUSH",sub:"Bench · Weighted Dips · OHP",tag:"POWERLIFTING + STREETLIFTING · W1:~85MIN",
    muscles:"Chest · Triceps (all 3 heads) · Front Delt · Side Delt",
-   goals:["Bench: 105→140kg","Weighted dip PR","Chest development","Tricep horseshoe","Boulder shoulders"],
+   goals:["Bench: 105→140kg","Weighted dip PR","Chest","Tricep horseshoe","Boulder shoulders"],
    ex:[
     {n:"Barbell Bench Press",t:"main",w:[
       {s:4,r:"1×10+3×8–10",note:"W1: TOP SET 1×10 @ RPE 7 (~65%). Retract scaps, leg drive, slight arc. 3 BACK-OFFS: -10% for 3×8–10 @ RPE 6."},
-      {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9 (~82%). 2s pause at chest, explosive press. 2 BACK-OFFS: -10% for 2×5 @ RPE 8. 3 min rest."},
-      {s:3,r:"1×2+2×3",note:"W3: TOP SET 1×2 @ RPE 10 (~90%+). Heaviest of block. 2 BACK-OFFS: -12% for 2×3 @ RPE 8–9. 4 min rest after top set."},
+      {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9 (~82%). 2s pause at chest. 2 BACK-OFFS: -10% for 2×5 @ RPE 8. 3 min rest."},
+      {s:3,r:"1×2+2×3",note:"W3: TOP SET 1×2 @ RPE 10 (~90%+). 2 BACK-OFFS: -12% for 2×3 @ RPE 8–9. 4 min rest after top set."},
       {s:3,r:"3×5",note:"W4 DELOAD: 3×5 @ RPE 5–6 (~60%). Move bar well. Flush fatigue."},
       {s:1,r:"1RM pyramid",note:"W5: Pyramid: 60%×5→70%×3→80%×2→87%×1→93%×1→PR. Log your new bench 1RM."},
     ]},
     {n:"Weighted Dips",t:"streetlifting",w:[
       {s:4,r:"1×10+3×8",note:"W1: TOP SET 1×10 @ RPE 7. Forward lean, full depth, lockout. 3 BACK-OFFS: -10% for 3×8 @ RPE 6."},
       {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9. Heavier belt. 2s descent. 2 BACK-OFFS: -10% for 2×5 @ RPE 8."},
-      {s:3,r:"1×2+2×3",note:"W3: TOP SET 1×2 @ RPE 10. Heaviest dip to date. 2 BACK-OFFS: -12% for 2×3 @ RPE 9. 4 min rest."},
+      {s:3,r:"1×2+2×3",note:"W3: TOP SET 1×2 @ RPE 10. Heaviest dip. 2 BACK-OFFS: -12% for 2×3 @ RPE 9. 4 min rest."},
       {s:3,r:"3×5",note:"W4: 3×5 BW @ RPE 5–6. Perfect movement pattern."},
       {s:1,r:"1RM pyramid",note:"W5: BW×5→+10kg×3→+20kg×2→+30kg×1→PR. Max weighted dip."},
     ]},
@@ -135,36 +336,36 @@ const DAYS = [
       {s:2,r:"10",note:"Keep triceps primed."},
     ]},
     {n:"Ab Finisher — Cable Crunch / Plank",t:"accessory",w:[
-      {s:3,r:"15",note:"W1: 3×15 cable crunches — ribs to hips, not head to floor. 2× weekly abs = visible abs faster. 5 min, non-negotiable."},
+      {s:3,r:"15",note:"W1: 3×15 cable crunches — ribs to hips, not head to floor. 2× weekly abs = visible abs faster."},
       {s:3,r:"12",note:"W2: 3×12 heavier cable crunches. +weight."},
       {s:2,r:"10",note:"W3: 2×10 heavy cable crunch. CNS week — still hit abs."},
-      {s:3,r:"45s plank",note:"W4: 3×45s RKC plank (squeeze everything). Deload — active engagement only."},
+      {s:3,r:"45s plank",note:"W4: 3×45s RKC plank (squeeze everything). Deload."},
       {s:3,r:"10",note:"W5: 3×10 heavy cable crunch. Keep abs primed."},
     ]},
   ]},
   {id:2,name:"PULL",sub:"Deadlift · Weighted Pull-ups · Row",tag:"POWERLIFTING + STREETLIFTING · W1:~80MIN",
    muscles:"Hamstrings · Lats · Mid-Back · Rear Delt · Biceps · Erectors · Forearms · Grip",
-   goals:["Deadlift: 220→250kg","Weighted pull-up PR","Demon back","Bicep peak","V-taper (lats)","Veiny forearms","Grip strength"],
+   goals:["Deadlift: 220→250kg","Weighted pull-up PR","Demon back","Bicep peak","Veiny forearms","Grip strength"],
    ex:[
     {n:"Barbell Deadlift",t:"main",w:[
-      {s:4,r:"1×8+3×8",note:"W1: TOP SET 1×8 @ RPE 7 (~65%). Dead stop every rep. Lat engagement, big brace, bar drags shins. 3 BACK-OFFS: -10% for 3×8 @ RPE 6."},
-      {s:3,r:"1×4+2×4",note:"W2: TOP SET 1×4 @ RPE 9 (~85%). Hips and bar rise together. No hitching. 2 BACK-OFFS: -10% for 2×4 @ RPE 8."},
-      {s:3,r:"1×2+2×2",note:"W3: TOP SET 1×2 @ RPE 10 (~92%+). Perfect setup. 2 BACK-OFFS: -12% for 2×2 @ RPE 9. 4–5 min rest."},
-      {s:3,r:"3×5",note:"W4: 3×5 @ RPE 5–6 (~60%). Reinforce technique. Active recovery."},
-      {s:1,r:"1RM pyramid",note:"W5: Pyramid: 60%×5→70%×3→80%×2→87%×1→93%×1→PR. New deadlift 1RM."},
+      {s:4,r:"1×8+3×8",note:"W1: TOP SET 1×8 @ RPE 7 (~65%). Dead stop every rep. Big brace, bar drags shins. 3 BACK-OFFS: -10% for 3×8 @ RPE 6."},
+      {s:3,r:"1×4+2×4",note:"W2: TOP SET 1×4 @ RPE 9 (~85%). Hips and bar rise together. No hitching. 2 BACK-OFFS: -10%."},
+      {s:3,r:"1×2+2×2",note:"W3: TOP SET 1×2 @ RPE 10 (~92%+). 2 BACK-OFFS: -12% for 2×2 @ RPE 9. 4–5 min rest."},
+      {s:3,r:"3×5",note:"W4: 3×5 @ RPE 5–6 (~60%). Reinforce technique."},
+      {s:1,r:"1RM pyramid",note:"W5: 60%×5→70%×3→80%×2→87%×1→93%×1→PR. New deadlift 1RM."},
     ]},
     {n:"Weighted Pull-ups",t:"streetlifting",w:[
-      {s:4,r:"1×10+3×8",note:"W1: TOP SET 1×10 @ RPE 7. BW or light belt. Dead hang every rep, chin clears bar. 3 BACK-OFFS: -10% for 3×8 @ RPE 6."},
-      {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9. Meaningful belt weight. 2s hold at top. 2 BACK-OFFS: -10% for 2×5 @ RPE 8."},
-      {s:3,r:"1×3+2×3",note:"W3: TOP SET 1×3 @ RPE 10. Heaviest weighted pull-up. 2 BACK-OFFS: -12% for 2×3 @ RPE 9. 4 min rest."},
+      {s:4,r:"1×10+3×8",note:"W1: TOP SET 1×10 @ RPE 7. Dead hang every rep, chin clears bar. 3 BACK-OFFS: -10% for 3×8 @ RPE 6."},
+      {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9. Meaningful belt weight. 2s hold at top. 2 BACK-OFFS: -10%."},
+      {s:3,r:"1×3+2×3",note:"W3: TOP SET 1×3 @ RPE 10. Heaviest weighted pull-up. 2 BACK-OFFS: -12%. 4 min rest."},
       {s:3,r:"3×5",note:"W4: 3×5 BW @ RPE 5. No belt. Feel the lat engage."},
       {s:1,r:"1RM pyramid",note:"W5: BW×5→+5kg×3→+10kg×2→+15kg×1→PR. Max weighted pull-up."},
     ]},
     {n:"Chest-Supported DB Row",t:"compound",w:[
-      {s:4,r:"10–12",note:"RPE 6–7. Incline bench ~45°, chest on pad. Row DBs to hips, elbows drive back. Full stretch at bottom. No lower back fatigue after deadlifts."},
+      {s:4,r:"10–12",note:"RPE 6–7. Incline bench ~45°, chest on pad. Row DBs to hips. Full stretch at bottom. No lower back fatigue after deadlifts."},
       {s:4,r:"6–8",note:"RPE 8–9. Heavier. 1s squeeze at top. Mid-back thickness = demon back depth."},
       {s:3,r:"4–5",note:"RPE 9–10. Heaviest. CNS back thickness."},
-      {s:2,r:"10",note:"RPE 5–6. Light. Deload. Feel the stretch."},
+      {s:2,r:"10",note:"RPE 5–6. Light. Deload."},
       {s:2,r:"8",note:"Moderate. Keep back thickness going."},
     ]},
     {n:"Face Pulls (Cable)",t:"accessory",w:[
@@ -177,66 +378,66 @@ const DAYS = [
     {n:"EZ Curl + Hammer Curl (Superset)",t:"accessory",w:[
       {s:3,r:"12 EZ+12 hammer",note:"SUPERSET. EZ curl: strict, supinate at top = bicep PEAK. Into hammer curl: neutral grip, 3s eccentric = brachialis + forearm thickness. Rest 90s."},
       {s:3,r:"10 EZ+10 hammer",note:"+weight both. 1s pause at peak on EZ. No momentum on hammer."},
-      {s:2,r:"8 EZ+8 hammer",note:"Volume cut. CNS week. Quality."},
+      {s:2,r:"8 EZ+8 hammer",note:"Volume cut. CNS week."},
       {s:2,r:"12 EZ+12 hammer",note:"Light. Deload. Arm flush."},
       {s:2,r:"10 EZ+10 hammer",note:"Moderate. Bicep peak + thickness both covered."},
     ]},
     {n:"Hyperextensions + Reverse Curl (Superset)",t:"accessory",w:[
-      {s:4,r:"15 hyper+12 rev",note:"SUPERSET. Hyperextensions: full ROM, squeeze erectors + glutes at top = Christmas tree. Into reverse curl (overhand EZ): brachioradialis + forearm extensors = veiny forearm pop. Rest 90s."},
+      {s:4,r:"15 hyper+12 rev",note:"SUPERSET. Hyperextensions: squeeze erectors + glutes at top = Christmas tree. Into reverse curl (overhand EZ): brachioradialis + forearm extensors = veiny forearm pop. Rest 90s."},
       {s:4,r:"12 hyper+10 rev",note:"Add plate to hypers. +weight on reverse curl."},
-      {s:3,r:"10 hyper+8 rev",note:"CNS week. Heavier on both. Quality."},
-      {s:3,r:"15 hyper+12 rev",note:"Light. Deload. Both movements flushed."},
+      {s:3,r:"10 hyper+8 rev",note:"CNS week. Heavier. Quality."},
+      {s:3,r:"15 hyper+12 rev",note:"Light. Deload."},
       {s:3,r:"12 hyper+10 rev",note:"Moderate. Erectors + forearms — demon back + veins."},
     ]},
     {n:"Wrist Roller + Farmer Carry (Superset)",t:"accessory",w:[
-      {s:3,r:"3 rolls+30m carry",note:"SUPERSET. Wrist roller 3 full winds, then immediately walk 30m with heaviest DBs. Wrist roller = forearm load. Farmer carry = crushing grip + traps. Rest 90s."},
+      {s:3,r:"3 rolls+30m carry",note:"SUPERSET. Wrist roller 3 full winds, then walk 30m with heaviest DBs. Wrist roller = forearm load. Farmer carry = crushing grip + traps. Rest 90s."},
       {s:3,r:"3 rolls+35m carry",note:"+weight on carry. Grip transfers directly to deadlift lockout."},
-      {s:2,r:"2 rolls+30m carry",note:"Volume cut. CNS week. Heavy carry still."},
-      {s:2,r:"2 rolls+25m carry",note:"Light carry. Deload. Keep grip active."},
+      {s:2,r:"2 rolls+30m carry",note:"Volume cut. CNS week."},
+      {s:2,r:"2 rolls+25m carry",note:"Light carry. Deload."},
       {s:3,r:"3 rolls+40m carry",note:"PR attempt — heaviest carry + longest. Log it."},
     ]},
   ]},
   {id:3,name:"LEGS",sub:"Squat · RDL · Defined + Strong",tag:"STRONG + SLIM (DEFICIT) · W1:~80MIN",
    muscles:"Quads · Hamstrings · Glutes · Inner Thigh · Calves · Tibialis",
-   goals:["Squat: 170→200kg","Slim defined legs","Quad teardrop definition","Inner thigh definition","Glute shape (not size)","Lean hamstrings"],
+   goals:["Squat: 170→200kg","Slim defined legs","Quad teardrop","Inner thigh definition","Glute shape"],
    ex:[
     {n:"Back Squat",t:"main",w:[
       {s:4,r:"1×10+3×8",note:"W1: TOP SET 1×10 @ RPE 7 (~65%). Below parallel, brace, knees out. 3 BACK-OFFS: -10% for 3×8 @ RPE 6. Deficit: volume = calorie burn NOT bulk."},
-      {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9 (~83%). 2 BACK-OFFS: -10% for 2×5 @ RPE 8. Strength without quad bulk stimulus."},
-      {s:3,r:"1×2+2×3",note:"W3: TOP SET 1×2 @ RPE 10 (~90%). 2 BACK-OFFS: -12% for 2×3 @ RPE 9. 4 min rest. Depth non-negotiable."},
-      {s:3,r:"3×5",note:"W4: 3×5 @ RPE 5–6 (~60%). Move well. Joints recover."},
-      {s:1,r:"1RM pyramid",note:"W5: Pyramid: 60%×5→70%×3→80%×2→87%×1→93%×1→PR. New squat 1RM."},
+      {s:3,r:"1×5+2×5",note:"W2: TOP SET 1×5 @ RPE 9 (~83%). 2 BACK-OFFS: -10% for 2×5 @ RPE 8. Strength without quad bulk."},
+      {s:3,r:"1×2+2×3",note:"W3: TOP SET 1×2 @ RPE 10 (~90%). 2 BACK-OFFS: -12% for 2×3 @ RPE 9. 4 min rest."},
+      {s:3,r:"3×5",note:"W4: 3×5 @ RPE 5–6 (~60%). Move well. Flush fatigue."},
+      {s:1,r:"1RM pyramid",note:"W5: 60%×5→70%×3→80%×2→87%×1→93%×1→PR. New squat 1RM."},
     ]},
     {n:"Romanian Deadlift",t:"compound",w:[
-      {s:4,r:"10–12",note:"RPE 6–7. Hamstring stretch + sculpt. 3s eccentric. Hip hinge. Lean-leg shaping — not mass building."},
-      {s:3,r:"6–8",note:"RPE 8–9. Heavier. Full hip extension. Hamstring strength, no size stimulus."},
-      {s:3,r:"3–4",note:"RPE 9. Heavy RDL. Volume cut. CNS — deep stretch every rep."},
-      {s:2,r:"8",note:"RPE 5–6. Light. Deload. Hip hinge flush."},
+      {s:4,r:"10–12",note:"RPE 6–7. 3s eccentric. Hip hinge. Hamstring stretch + sculpt. Lean-leg shaping not mass building."},
+      {s:3,r:"6–8",note:"RPE 8–9. Heavier. Full hip extension."},
+      {s:3,r:"3–4",note:"RPE 9. Heavy RDL. Volume cut. Deep stretch every rep."},
+      {s:2,r:"8",note:"RPE 5–6. Light. Deload."},
       {s:2,r:"6",note:"Moderate. Legs fresh = better squat PR."},
     ]},
     {n:"Bulgarian Split Squat",t:"compound",w:[
-      {s:4,r:"12/leg",note:"RPE 6–7. Light DBs. Long stride. Unilateral = lean quad definition not bulk. Glute emphasis with forward lean."},
-      {s:3,r:"8/leg",note:"RPE 8. Moderate DBs. 3s eccentric. Single-leg strength."},
+      {s:4,r:"12/leg",note:"RPE 6–7. Light DBs. Long stride. Unilateral = lean quad definition not bulk. Glute emphasis."},
+      {s:3,r:"8/leg",note:"RPE 8. Moderate DBs. 3s eccentric."},
       {s:3,r:"5/leg",note:"RPE 8–9. Heavier DBs. Quality reps. CNS week low volume."},
-      {s:2,r:"8/leg",note:"RPE 5–6. Light DBs. Deload. Pattern."},
+      {s:2,r:"8/leg",note:"RPE 5–6. Light DBs. Deload."},
       {s:2,r:"8/leg",note:"Moderate. Supplementary to squat PR day."},
     ]},
     {n:"Leg Extension + Leg Curl (Superset)",t:"accessory",w:[
-      {s:3,r:"12 ext+12 curl",note:"SUPERSET — perfect antagonist pair. Leg extension: full ROM, 2s squeeze at top, hits VMO (teardrop above knee) = quad definition. Into leg curl: dorsiflexed feet, 3s eccentric = hamstring definition. Rest 90s. Saves 8+ min."},
-      {s:3,r:"10 ext+10 curl",note:"+weight both. Extension: 2s pause at top. Curl: 3s eccentric."},
-      {s:2,r:"10 ext+8 curl",note:"Volume cut. CNS week. Heavier on extension — quad definition focus."},
-      {s:2,r:"12 ext+12 curl",note:"Light. Deload. Full ROM on both."},
+      {s:3,r:"12 ext+12 curl",note:"SUPERSET. Leg extension: 2s squeeze at top, hits VMO (teardrop) = quad definition. Into leg curl: dorsiflexed feet, 3s eccentric = hamstring definition. Rest 90s. Saves 8+ min."},
+      {s:3,r:"10 ext+10 curl",note:"+weight both. Extension: 2s pause. Curl: 3s eccentric."},
+      {s:2,r:"10 ext+8 curl",note:"Volume cut. CNS week."},
+      {s:2,r:"12 ext+12 curl",note:"Light. Deload. Full ROM."},
       {s:3,r:"10 ext+10 curl",note:"Moderate. Quad separation + hamstring definition."},
     ]},
     {n:"Adductor Machine / Copenhagen Plank",t:"accessory",w:[
-      {s:3,r:"15–20",note:"Machine: squeeze knees together. SLOW — 3s squeeze in, 2s hold, 3s release. Inner thigh burnout. High reps = definition not bulk. No machine: Copenhagen plank — side plank, top foot on bench, raise bottom leg."},
+      {s:3,r:"15–20",note:"Machine: squeeze knees together. SLOW — 3s in, 2s hold, 3s release. Inner thigh burnout. High reps = definition not bulk. No machine: Copenhagen plank."},
       {s:3,r:"15",note:"+weight. Slow tempo. Inner thigh strength = visible separation at low BF."},
-      {s:2,r:"12",note:"Moderate. Volume cut. CNS week."},
-      {s:2,r:"20",note:"Light. Deload. Active inner thigh flush."},
-      {s:3,r:"15",note:"Moderate. Inner thigh definition finisher."},
+      {s:2,r:"12",note:"Moderate. Volume cut."},
+      {s:2,r:"20",note:"Light. Deload."},
+      {s:3,r:"15",note:"Moderate. Inner thigh finisher."},
     ]},
     {n:"Hip Thrust (Barbell / DB)",t:"accessory",w:[
-      {s:3,r:"15",note:"Upper back on bench, bar on hips. Drive hips UP, squeeze glutes HARD for 1s. Moderate weight, HIGH reps = shape not size. Athletic rounded glute. In deficit this sculpts, not grows."},
+      {s:3,r:"15",note:"Upper back on bench, bar on hips. Drive hips UP, squeeze glutes HARD for 1s. Moderate weight, HIGH reps = shape not size. Athletic glute look. In deficit this sculpts not grows."},
       {s:3,r:"12",note:"+weight. 2s squeeze at top. Drive through heels."},
       {s:2,r:"10",note:"Volume cut. Quality contractions only."},
       {s:2,r:"15",note:"Light. Deload. Glute activation."},
@@ -244,572 +445,542 @@ const DAYS = [
     ]},
     {n:"Tib Raises + Calf Raises",t:"accessory",w:[
       {s:3,r:"15+15",note:"15 tib raises (lean against wall, raise toes) + 15 calf raises. Full ROM. 2s pause at top. Lower leg definition."},
-      {s:3,r:"15+12",note:"Add weight to calves. Tibs same. 3s eccentric on calves."},
-      {s:2,r:"15+10",note:"Volume cut. Quality."},
-      {s:2,r:"15+12",note:"Light. Deload. Lower leg flush."},
+      {s:3,r:"15+12",note:"Add weight to calves. 3s eccentric on calves."},
+      {s:2,r:"15+10",note:"Volume cut."},
+      {s:2,r:"15+12",note:"Light. Deload."},
       {s:2,r:"15+10",note:"Moderate. Keep lower legs defined."},
     ]},
   ]},
   {id:4,name:"SKILLS",sub:"Muscle-up · Statics · Handstand · Flag · Core",tag:"CALISTHENICS — ALL GOALS · W1:~90MIN",
    muscles:"Lats · Biceps · Core · Obliques · Shoulders · Serratus · Wrists · Knuckles",
-   goals:["First muscle-up","L-sit 25s+","Back lever","Freestanding handstand","Front lever (foundation)","Human flag (foundation)","Dragon flags","Scapular control","Knuckle conditioning"],
+   goals:["First muscle-up","L-sit 25s+","Back lever","Freestanding handstand","Front lever","Human flag","Dragon flags","Scap control","Knuckle conditioning"],
    ex:[
     {n:"🔥 WARMUP — Scap + Knuckles",t:"accessory",w:[
-      {s:2,r:"10+10 scap+knuckles",note:"ALWAYS FIRST. (1) Scap PULL-ups: dead hang → depress+retract scaps without bending elbows. 10 reps. (2) Scap PUSH-ups: push-up position, arms locked → protract then retract shoulder blades. 10 reps. Foundation of handstand + all static holds. (3) Knuckle push-ups on CARPET: 2×30s holds. Skin adaptation — DO NOT skip to concrete."},
+      {s:2,r:"10+10 scap+knuckles",note:"ALWAYS FIRST. (1) Scap PULL-ups: dead hang → depress+retract scaps without bending elbows. 10 reps. (2) Scap PUSH-ups: push-up position, arms locked → protract then retract. 10 reps. Foundation of all static holds. (3) Knuckle push-ups on CARPET: 2×30s holds. DO NOT skip to concrete."},
       {s:2,r:"10+10 scap+2×20 knuckle",note:"Scap pull-ups + push-ups same. Knuckle push-ups: 2×20 reps on carpet."},
       {s:2,r:"10+10 scap+3×15 knuckle",note:"Scap work same. Knuckle push-ups: 3×15 on wood floor if zero soreness."},
-      {s:2,r:"10+10 scap+easy",note:"Deload. Both scap movements light. Knuckle push-ups back on carpet."},
-      {s:2,r:"10+10 scap+3×20 knuckle",note:"Scap PR check — stronger? Knuckle push-ups: carpet W1→wood W3→concrete W8–10."},
+      {s:2,r:"10+10 scap+easy",note:"Deload. Scap movements light. Knuckle push-ups on carpet."},
+      {s:2,r:"10+10 scap+3×20 knuckle",note:"Scap PR check. Knuckle push-ups: carpet W1→wood W3→concrete W8–10."},
     ]},
     {n:"⚡ Muscle-up Progression",t:"streetlifting",w:[
-      {s:5,r:"3–5",note:"START: Can do 10 pull-ups? → Chest-to-bar pull-ups (touch sternum). Can't? → Band assistance. Explosive pull hips to bar. Do this first — needs freshest CNS."},
+      {s:5,r:"3–5",note:"START: Can do 10 pull-ups? → Chest-to-bar (touch sternum). Can't? → Band assistance. Explosive pull hips to bar. Do first — freshest CNS."},
       {s:4,r:"3–4",note:"Reduce band OR transition drills: pull to sternum → pause 1s → press out. Lock out every rep. 3 min rest."},
       {s:3,r:"2–3",note:"Full strict MU from dead hang. No kip. 4 min rest. CNS = quality not quantity."},
-      {s:2,r:"4–5",note:"Band-assisted or chest-to-bar only. RPE 5–6. Active recovery. Deload."},
-      {s:1,r:"Max clean",note:"Max strict muscle-ups one set. No kipping. Log reps. Benchmark for Block 2."},
+      {s:2,r:"4–5",note:"Band-assisted or chest-to-bar only. RPE 5–6. Deload."},
+      {s:1,r:"Max clean",note:"Max strict muscle-ups one set. No kipping. Log reps. Benchmark Block 2."},
     ]},
     {n:"🤸 Handstand Progression",t:"calisthenics",w:[
-      {s:5,r:"5×25–35s",note:"START: Chest-to-wall HS. Face wall, walk hands in until chest touches. Hollow body: ribs down, glutes squeezed, arms locked. Hold 25–35s. ~15 min total."},
+      {s:5,r:"5×25–35s",note:"START: Chest-to-wall HS. Face wall, walk hands in until chest touches. Hollow body: ribs down, glutes squeezed, arms locked. Hold 25–35s."},
       {s:4,r:"Kick-ups",note:"Heel-to-wall + 3 freestanding kick-up attempts per set. Balance corrections via fingertip pressure."},
       {s:3,r:"Freestanding",note:"Freestanding attempts only. Max hold. Rest fully. CNS = peak coordination."},
       {s:2,r:"2×30s wall",note:"Wall holds only. No freestanding. Active recovery. Deload."},
       {s:1,r:"Max PR",note:"Longest freestanding hold. Log seconds. Target 5s+ Block 1, 10s+ Block 2."},
     ]},
     {n:"📐 L-sit → Front Lever",t:"calisthenics",w:[
-      {s:4,r:"4×10s tuck L",note:"START: Tuck L-sit on bars. Depress shoulders DOWN hard, knees to chest. Hold 10s × 4 rounds. Can't hold? → Shoulder depression holds first (just push down, no legs)."},
-      {s:4,r:"4×8s full L",note:"Full L-sit — legs parallel to floor. If can't: tuck + 1 leg extend attempts."},
+      {s:4,r:"4×10s tuck L",note:"START: Tuck L-sit on bars. Depress shoulders DOWN hard, knees to chest. Hold 10s × 4. Can't hold? → Shoulder depression holds first."},
+      {s:4,r:"4×8s full L",note:"Full L-sit — legs parallel. If can't: tuck + 1 leg extend attempts."},
       {s:3,r:"3×max+tuck FL",note:"Max L-sit each set, then 3×5s tuck front lever. CNS."},
       {s:2,r:"2×15s tuck L",note:"Tuck L-sit only. Easy. Deload."},
       {s:1,r:"L-sit PR+tuck FL",note:"Max L-sit PR then 3 tuck front lever attempts. Log both."},
     ]},
     {n:"🔙 Back Lever Progression",t:"calisthenics",w:[
-      {s:4,r:"4×8s tuck",note:"START: Dead hang → pull over to inverted hang → lower into tuck (knees to chest, hips level). Hold 8s. Warm up shoulders with 10 arm circles first."},
-      {s:4,r:"4×6s adv tuck",note:"Advanced tuck — knees further from chest. Or one leg extended attempts."},
+      {s:4,r:"4×8s tuck",note:"START: Dead hang → inverted hang → lower into tuck (knees to chest, hips level). Hold 8s. Warm up shoulders with 10 arm circles first."},
+      {s:4,r:"4×6s adv tuck",note:"Advanced tuck — knees further from chest. Or one leg extended."},
       {s:3,r:"3×max hold",note:"Half-lay or full back lever. Max hold. 3 min rest. CNS."},
       {s:2,r:"2×10s tuck",note:"Tuck only. Deload. Joint health."},
       {s:1,r:"PR attempt",note:"Hardest variation, max hold. Log it."},
     ]},
     {n:"🚩 Human Flag Progression",t:"calisthenics",w:[
-      {s:3,r:"3×5s tuck",note:"⏱ CUTTABLE if short on time in W1. Find vertical pole. Top hand above head (palm away), bottom at hip (palm up). Push top, pull bottom. Tuck knees. Even 2s is a win first session. ~10 min."},
+      {s:3,r:"3×5s tuck",note:"⏱ CUTTABLE if short on time W1. Vertical pole: top hand above head (palm away), bottom at hip (palm up). Push top, pull bottom. Tuck knees. Even 2s is a win."},
       {s:3,r:"3×4s tuck/1-leg",note:"Tuck flag + attempt 1 leg extend at end of each hold."},
       {s:2,r:"2×max hold",note:"Hardest variation. Max hold. CNS. 3 min rest."},
       {s:2,r:"2×6s tuck",note:"Tuck only. Easy. Deload."},
       {s:1,r:"PR attempt",note:"Hardest achievable flag variation. Log hold time."},
     ]},
     {n:"Core Finisher — Dragon Flag / Ab Wheel",t:"calisthenics",w:[
-      {s:3,r:"8–10",note:"START: Ab wheel from knees OR tuck dragon flag (lie on bench, grab overhead, tuck knees, lower 3s). No full dragon flag yet. ~8 min. Do this last."},
+      {s:3,r:"8–10",note:"START: Ab wheel from knees OR tuck dragon flag (lie on bench, grab overhead, tuck knees, lower 3s). No full dragon flag yet. Do this last."},
       {s:3,r:"6–8",note:"Standing rollouts or 4s dragon flag negatives. Strength week."},
       {s:2,r:"4–5",note:"Full dragon flags or standing rollouts. CNS = hardest version, fewer reps."},
       {s:2,r:"8",note:"Knee rollouts only. Deload core."},
       {s:1,r:"Max",note:"Max full dragon flags. Core PR. Log it."},
     ]},
   ]},
-  {id:5,name:"BACK+BOULDERS",sub:"Demon Back · Boulder Shoulders · Abs · Obliques",tag:"AESTHETICS (DEFICIT) · W1:~75MIN",
-   muscles:"Lats · Mid-Back · Rear Delt · Side Delt · Front Delt · Abs · Obliques · Serratus",
-   goals:["Demon back (lat width+lower lat+serratus)","Boulder shoulders (all 3 heads)","V-taper illusion","Visible abs + oblique lines"],
+  {id:5,name:"AESTHETICS",sub:"Full Body Sculpt — Toji/Marlon Physique",tag:"PURE AESTHETICS (DEFICIT) · W1:~110MIN",
+   muscles:"Lats · Serratus · Mid-Back · Chest · Rear Delt · Side Delt · Traps · Biceps · Triceps · Forearms · Abs · Obliques · Inner Thigh · Calves · Tibialis",
+   goals:["Demon back (lats+serratus+lower lat)","Boulder shoulders (all 3 heads)","V-taper illusion","Chest definition + pec sweep","Trap/neck thickness (Toji look)","Bicep peak + tricep horseshoe","Veiny forearms (2× weekly)","Inner thigh definition (2× weekly)","Lower leg definition (2× weekly)","Visible abs + oblique lines","Rear delt 3D roundness"],
    ex:[
     {n:"Wide Grip Pull-ups",t:"main",w:[
-      {s:4,r:"1×12+3×8–10",note:"W1: TOP SET 1×12 @ RPE 7. Wide grip, dead hang every rep, chin clears bar, 2s squeeze. 3 BACK-OFFS: -10% for 3×8–10 @ RPE 6. Lat WIDTH anchor."},
-      {s:3,r:"1×6+2×6",note:"W2: TOP SET 1×6 @ RPE 9. Belt weight. Drive elbows DOWN to hips. 2 BACK-OFFS: -10% for 2×6 @ RPE 8."},
-      {s:3,r:"1×4+2×4",note:"W3: TOP SET 1×4 @ RPE 10. Heaviest pull-ups of block. 2 BACK-OFFS: -12% for 2×4 @ RPE 9."},
+      {s:4,r:"1×12+3×8–10",note:"W1: TOP SET 1×12 @ RPE 7. Wide grip, dead hang every rep, 2s squeeze at top. 3 BACK-OFFS: -10% for 3×8–10 @ RPE 6. Lat WIDTH anchor — foundation of V-taper and demon back."},
+      {s:3,r:"1×6+2×6",note:"W2: TOP SET 1×6 @ RPE 9. Belt weight. Drive elbows DOWN to hips. 2 BACK-OFFS: -10%."},
+      {s:3,r:"1×4+2×4",note:"W3: TOP SET 1×4 @ RPE 10. Heaviest of block. 2 BACK-OFFS: -12% for 2×4 @ RPE 9."},
       {s:3,r:"3×8 BW",note:"W4: 3×8 BW @ RPE 5. No belt. Smooth. Feel the lat stretch."},
-      {s:1,r:"Max reps BW",note:"W5: Max BW wide grip pull-ups one set. Log clean reps."},
-    ]},
-    {n:"Seated Cable Row",t:"compound",w:[
-      {s:4,r:"10–12",note:"RPE 6–7. Close grip. Row to lower chest, elbows tight. 1s squeeze, slow 3s return. Constant tension. Mid-back thickness + demon back depth."},
-      {s:4,r:"6–8",note:"RPE 8–9. Heavier. Drive elbows back hard. Squeeze rhomboids at top."},
-      {s:3,r:"4–5",note:"RPE 9–10. Heaviest. CNS back thickness. Full stretch forward each rep."},
-      {s:2,r:"10",note:"RPE 5–6. Light. Deload. Feel the stretch."},
-      {s:2,r:"8",note:"Moderate. Keep back thickness stimulus."},
+      {s:1,r:"Max reps BW",note:"W5: Max BW wide grip pull-ups. Log clean reps."},
     ]},
     {n:"Straight Arm Cable Pulldown",t:"compound",w:[
-      {s:4,r:"12–15",note:"High cable, rope or straight bar. Arms almost straight. Pull DOWN from eye level to hips. Lower lat + serratus = demon back spread. 3s eccentric back up."},
-      {s:3,r:"10–12",note:"RPE 8. Heavier. Slow 3s eccentric. Maximal lat stretch."},
+      {s:4,r:"12–15",note:"High cable, rope. Arms almost straight. Pull DOWN from eye level to hips. Lower lat + serratus = that shredded ribcage look Toji has. 3s eccentric back up. RPE 6–7."},
+      {s:3,r:"10–12",note:"RPE 8. Heavier. Slow 3s eccentric. Maximal lat + serratus stretch at top."},
       {s:3,r:"8–10",note:"RPE 8–9. Heaviest. Feel lower lat fire. CNS."},
-      {s:2,r:"12",note:"RPE 5–6. Light. Deload. Lower lat activation."},
-      {s:3,r:"10",note:"Moderate. Every rep: stretch overhead, pull to hips."},
+      {s:2,r:"12",note:"RPE 5–6. Light. Deload. Lower lat + serratus activation."},
+      {s:3,r:"10",note:"Moderate. Serratus is what separates the ribcage at low BF — this is the exercise for it."},
+    ]},
+    {n:"Seated Cable Row",t:"compound",w:[
+      {s:4,r:"10–12",note:"RPE 6–7. Close grip. Row to lower chest, elbows tight. 1s squeeze, slow 3s return. Constant tension. Mid-back thickness = demon back depth — the vertical separation lines."},
+      {s:4,r:"6–8",note:"RPE 8–9. Heavier. Drive elbows back hard. Squeeze rhomboids at top."},
+      {s:3,r:"8–10",note:"RPE 8. Moderate. CNS week — volume cut but quality stimulus."},
+      {s:2,r:"10",note:"RPE 5–6. Light. Deload."},
+      {s:2,r:"8",note:"Moderate. Keep back thickness going."},
+    ]},
+    {n:"Cable Fly + Reverse Pec Deck (Superset)",t:"compound",w:[
+      {s:4,r:"12 fly+12 rev",note:"SUPERSET. Cable fly: arms slightly bent, pull from wide to centre at chest height — stretch + squeeze = pec definition and chest sweep line. Immediately into reverse pec deck: face pad, elbows out, squeeze rear delts = 3D shoulder roundness from behind. Rest 90s. Your chest is already big — this sharpens the lines."},
+      {s:3,r:"10 fly+12 rev",note:"+weight on fly. Full stretch at bottom. Rear delt same."},
+      {s:2,r:"10 fly+12 rev",note:"Volume cut. CNS week. Quality stretch on both."},
+      {s:2,r:"12 fly+12 rev",note:"Light. Deload. Active chest + rear delt flush."},
+      {s:3,r:"10 fly+12 rev",note:"Moderate. Cable fly = pec definition. Reverse pec deck = 3D rear delt roundness."},
     ]},
     {n:"Side Delt Focus Triset",t:"compound",w:[
-      {s:4,r:"15+12+12",note:"TRISET: (1) Cable lateral raise 15/side — lean away, elbow leads, 2s hold → (2) DB upright row 12 — elbows flare OUT wide = side delt → (3) Face pull 12 — external rotation, rear delt. No rest between. 90s after. Side delt = V-taper illusion."},
+      {s:4,r:"15+12+12",note:"TRISET: (1) Cable lateral raise 15/side — lean away, elbow leads, 2s hold → (2) DB upright row 12 — elbows OUT wide to chin = side delt → (3) Face pull 12 — external rotation. No rest between. 90s after. Side delt caps = shoulder WIDTH = V-taper = boulder shoulder look."},
       {s:3,r:"12+10+12",note:"+weight on lateral + upright row. 90s rest."},
       {s:3,r:"10+8+12",note:"Heaviest laterals + upright rows. CNS. Face pulls same."},
-      {s:2,r:"12+10+15",note:"Light. Deload. Full triset easy."},
-      {s:3,r:"12+10+12",note:"Moderate. Capped side delts = V-taper from every angle."},
+      {s:2,r:"12+10+15",note:"Light. Deload."},
+      {s:3,r:"12+10+12",note:"Moderate. Capped side delts from every angle."},
+    ]},
+    {n:"DB Shrugs",t:"accessory",w:[
+      {s:3,r:"12–15",note:"Heavy DBs. Straight arms. Shrug UP and slightly back — NOT forward. 1s hard squeeze at top. 3s slow lower. Traps + upper back = that Toji neck-to-shoulder line that makes you look dangerous. DO NOT roll shoulders — straight up and down only."},
+      {s:3,r:"12",note:"+weight. 1s hold at top. Trap thickness shows immediately at low BF."},
+      {s:2,r:"10",note:"Heavier. Volume cut. CNS week."},
+      {s:2,r:"12",note:"Light. Deload."},
+      {s:3,r:"12",note:"Moderate. Traps = the Toji/Marlon look. This + low BF = dangerous silhouette."},
+    ]},
+    {n:"Cable Curl + Rope Pushdown + Reverse Curl (Triset)",t:"accessory",w:[
+      {s:3,r:"12 curl+15 push+12 rev",note:"TRISET — full arm definition. Cable curl: supinate hard at top = bicep PEAK. Into rope pushdown: spread at bottom = lateral + medial tricep = horseshoe. Into reverse curl (overhand EZ): brachioradialis + forearm extensors = the muscle that pops on outside of forearm = veiny forearms. Rest 90s. All arm goals in one trio."},
+      {s:3,r:"10 curl+12 push+10 rev",note:"+weight on all three. 1s squeeze at peak on curl. Spread hard at bottom on pushdown."},
+      {s:2,r:"10 curl+10 push+10 rev",note:"Volume cut. CNS week. All three + forearms still get stimulus."},
+      {s:2,r:"12 curl+12 push+12 rev",note:"Light. Deload. Full arm flush."},
+      {s:3,r:"10 curl+12 push+10 rev",note:"Moderate. Bicep peak + tricep horseshoe + veiny forearms — all three visible at 12% BF."},
     ]},
     {n:"Cable Crunch (Kneeling)",t:"calisthenics",w:[
-      {s:4,r:"15",note:"RPE 6–7. Rope. Crunch RIBS TO HIPS not head to floor. Weighted abs = visible abs at 12% BF. 1s pause at bottom."},
+      {s:4,r:"15",note:"RPE 6–7. Rope. Crunch RIBS TO HIPS not head to floor. Weighted abs = visible abs at 12% BF. 1s pause at bottom. 2× weekly frequency = faster visible abs."},
       {s:4,r:"10–12",note:"RPE 8. Heavier. 3s eccentric back to start."},
-      {s:3,r:"8–10",note:"RPE 8–9. Heaviest cable crunch. CNS for abs."},
-      {s:2,r:"12",note:"RPE 5–6. Light. Deload. Active ab engagement."},
-      {s:3,r:"10",note:"Moderate. Weighted abs + low BF = road map."},
+      {s:3,r:"8–10",note:"RPE 8–9. Heaviest. CNS for abs."},
+      {s:2,r:"12",note:"RPE 5–6. Light. Deload."},
+      {s:3,r:"10",note:"Moderate. Ab road map = weighted training + low BF. Both happening."},
     ]},
     {n:"Hanging Leg Raise + Twist",t:"calisthenics",w:[
-      {s:4,r:"12+10 twists",note:"12 straight raises to 90° + 10 alternating twists same hang. Lower abs + oblique lines. No swinging."},
+      {s:4,r:"12+10 twists",note:"12 straight raises to 90° + 10 alternating twists same hang. Lower abs + oblique lines. No swinging. Lower abs are last to show — weighted training now means they're ready when BF drops."},
       {s:3,r:"10+10 twists",note:"Try toes-to-bar on straight raises. Oblique twists same."},
       {s:3,r:"8 toes-to-bar",note:"Full toes-to-bar CNS reps + twists. Perfect execution."},
-      {s:2,r:"10 knee tucks",note:"Knee tucks only. Deload. Active core."},
+      {s:2,r:"10 knee tucks",note:"Knee tucks only. Deload."},
       {s:3,r:"Max clean",note:"Max toes-to-bar + twists. Log benchmark."},
     ]},
     {n:"Pallof Press + Oblique Crunch",t:"accessory",w:[
-      {s:3,r:"12/side each",note:"SUPERSET — Pallof press (2s hold, anti-rotation) + cable oblique crunch. Oblique lines WITHOUT widening waist."},
+      {s:3,r:"12/side each",note:"SUPERSET — Pallof press (2s hold, anti-rotation) + cable oblique crunch. Oblique lines WITHOUT widening waist — wide obliques ruin V-taper. This builds lines not width."},
       {s:3,r:"10/side each",note:"+weight both. Controlled oblique strength."},
       {s:3,r:"8/side each",note:"Heavier. CNS oblique definition."},
-      {s:2,r:"12/side each",note:"Light. Deload. Anti-rotation pattern."},
-      {s:3,r:"10/side each",note:"Moderate. V-taper from the side = oblique lines. Finisher."},
+      {s:2,r:"12/side each",note:"Light. Deload."},
+      {s:3,r:"10/side each",note:"Moderate. Oblique lines = V-taper from the side. Finisher."},
+    ]},
+    {n:"Adductor Machine / Copenhagen Plank",t:"accessory",w:[
+      {s:2,r:"15–20",note:"2× weekly inner thigh = visible separation faster at low BF. D3 was Wednesday, D5 is Saturday — fully recovered. Slow: 3s squeeze in, 2s hold, 3s release. Definition not bulk. No machine: Copenhagen plank."},
+      {s:2,r:"15",note:"+weight. Slow tempo. Inner thigh strength = visible quad-to-inner-thigh separation at low BF."},
+      {s:2,r:"12",note:"Volume cut. CNS week."},
+      {s:2,r:"15",note:"Light. Deload. Active flush."},
+      {s:2,r:"15",note:"Moderate. 2× weekly inner thigh frequency — shows at 12% BF."},
+    ]},
+    {n:"Tib Raises + Calf Raises",t:"accessory",w:[
+      {s:2,r:"15+15",note:"2× weekly lower leg. D3 was Wednesday — 3 days recovery, fine. Tib raises: lean against wall, raise toes. Calf raises: full ROM, 2s pause at top. Lower leg definition completes the slim athletic leg look."},
+      {s:2,r:"15+12",note:"+weight on calves. Tibs same. 3s eccentric on calves."},
+      {s:2,r:"15+10",note:"Volume cut. Quality."},
+      {s:2,r:"15+12",note:"Light. Deload. Lower leg flush."},
+      {s:2,r:"15+10",note:"Moderate. Slim athletic legs top to bottom — this finishes the look."},
     ]},
   ]},
 ];
 
-const BLOCKS = [
-  {label:"21 Mar – 25 Apr 2026",name:"BLOCK 1",weeks:"Wk 1–5",focus:"Cut + Base Strength",bf:"20%→18%",wt:"88→85kg",c:"#4ADE80"},
-  {label:"26 Apr – 30 May 2026",name:"BLOCK 2",weeks:"Wk 6–10",focus:"Cut + Strength Build",bf:"18%→15%",wt:"85→82kg",c:"#FBBF24"},
-  {label:"31 May – 4 Jul 2026",name:"BLOCK 3",weeks:"Wk 11–15",focus:"Cut + Peak Aesthetics",bf:"15%→12%",wt:"82→79kg",c:"#F97316",peak:true},
-  {label:"5 Jul – 8 Aug 2026",name:"BLOCK 4",weeks:"Wk 16–20",focus:"Summer Shred + PRs",bf:"12%→10%",wt:"79→77kg",c:"#F43F5E"},
-];
+// STATE
+var currentTab='profile';
+var currentDay=0;
+var currentWeek=0;
 
-const LIFTS = {bench:{cur:105,goal:140},deadlift:{cur:220,goal:250},squat:{cur:170,goal:200}};
-
-const MILESTONES = [
-  {icon:"⚡",label:"First Strict Muscle-up",target:"Block 1–2",lift:false},
-  {icon:"💪",label:"Bench: 105→120kg",target:"Block 2",lift:true},
-  {icon:"📐",label:"Full L-sit 25s+",target:"Block 2",lift:false},
-  {icon:"🏋️",label:"Deadlift: 220→235kg",target:"Block 2",lift:true},
-  {icon:"🦵",label:"Squat: 170→185kg",target:"Block 2–3",lift:true},
-  {icon:"🔙",label:"Back Lever held",target:"Block 3",lift:false},
-  {icon:"👀",label:"Visible Abs (12% BF)",target:"Block 3",lift:false},
-  {icon:"💪",label:"Bench: 120→140kg",target:"Block 3–4",lift:true},
-  {icon:"🏋️",label:"Deadlift: 235→250kg",target:"Block 4",lift:true},
-  {icon:"🦵",label:"Squat: 185→200kg",target:"Block 4",lift:true},
-  {icon:"🔥",label:"10% BF — Full V-Taper + Demon Back",target:"Block 4/Summer",lift:false},
-];
-
-const AGOALS = [
-  {text:"Demon back — erector definition, lat spread, Christmas tree",pri:true},
-  {text:"Boulder shoulders — all 3 delt heads, 3D roundness",pri:true},
-  {text:"Visible abs and oblique lines",pri:true},
-  {text:"Slim, defined legs — not blocky",pri:true},
-  {text:"V-taper — wide back, capped shoulders, narrow waist",pri:true},
-  {text:"Veiny forearms — sub-10% BF reveals vascularity",pri:true},
-  {text:"Lower abdominal definition — training builds muscle now, reveals at 10–12% BF",pri:true},
-  {text:"Full chest development",pri:false},
-  {text:"Arm size — bicep peak, tricep horseshoe",pri:false},
-  {text:"10% BF revealing everything",pri:false},
-];
-
-const CGOALS = [
-  {icon:"⚡",label:"Strict Muscle-up",cur:"Can't yet",tgt:"Block 1–2",tier:1},
-  {icon:"📐",label:"Full L-sit (25s+)",cur:"Can't yet",tgt:"Block 1–2",tier:1},
-  {icon:"🔙",label:"Back Lever",cur:"Can't yet",tgt:"Block 2",tier:2},
-  {icon:"🤸",label:"Freestanding Handstand",cur:"Can't yet",tgt:"Block 2",tier:2},
-  {icon:"⬆️",label:"Front Lever",cur:"Can't yet",tgt:"Block 3",tier:3},
-  {icon:"🐦",label:"Human Flag",cur:"Can't yet",tgt:"Block 3–4",tier:3},
-  {icon:"🌟",label:"Planche",cur:"Can't yet",tgt:"Long-term",tier:4},
-];
-
-const CPROG = [
-  {skill:"Muscle-up",c:"#22D3EE",steps:["Band chest-to-bar","Strict chest-to-bar (sternum)","Band MU","Strict MU","Weighted MU"],rule:"5 clean reps, 2 in reserve"},
-  {skill:"L-sit → Front Lever",c:"#34D399",steps:["Shoulder depression hold","Tuck L-sit 10s","One leg extend","Full L-sit 15s+","Tuck front lever 5s","Adv tuck FL","Full front lever"],rule:"Hold 8–10s comfortably"},
-  {skill:"Back Lever",c:"#A78BFA",steps:["Inverted hang","Skin the cat","Tuck back lever 5s","Adv tuck 5s","One leg extended","Half-lay","Full back lever"],rule:"8–10s hold no strain"},
-  {skill:"Handstand",c:"#FBBF24",steps:["Chest-to-wall 30s","Heel-to-wall 30s","Kick-up attempts","Freestanding 2–3s","Freestanding 5s","Freestanding 10s+"],rule:"Consistent across 3+ attempts"},
-  {skill:"Human Flag",c:"#F97316",steps:["Tuck flag 3s","Tuck flag 5s","One leg extend 3s","Straddle flag","Full flag"],rule:"5s clean hold, controlled entry/exit"},
-  {skill:"Dragon Flag",c:"#F43F5E",steps:["Tuck negatives 3s","Full negatives 5s","Eccentric only","Full reps"],rule:"5 clean reps current variation"},
-];
-
-const CALS = [
-  ["W1 HYPERTROPHY","#4ADE80",[["MON","D1","2700"],["TUE","D2","2700"],["WED","D3","2800"],["THU","REST","2000"],["FRI","D4","2600"],["SAT","D5","2600"],["SUN","REST","2000"]],"Full deficit. Legs day highest — biggest calorie burn."],
-  ["W2 STRENGTH","#FBBF24",[["MON","D1","2700"],["TUE","D2","2700"],["WED","D3","2800"],["THU","REST","2000"],["FRI","D4","2600"],["SAT","D5","2600"],["SUN","REST","2000"]],"Full deficit. Lower volume so rest days hit harder — stick to it."],
-  ["W3 CNS ADAPT","#F97316",[["MON","D1","2900"],["TUE","D2","2900"],["WED","D3","2950"],["THU","REST","2200"],["FRI","D4","2850"],["SAT","D5","2850"],["SUN","REST","2200"]],"Near maintenance. CNS near-max sessions need fuel. Does NOT add fat — takes weeks of surplus for that."],
-  ["W4 DELOAD","#60A5FA",[["MON","D1","2400"],["TUE","D2","2400"],["WED","D3","2400"],["THU","REST","1900"],["FRI","D4","2400"],["SAT","D5","2400"],["SUN","REST","1900"]],"Push deficit hardest. Lowest training demand — no performance cost."],
-  ["W5 PR TEST","#F43F5E",[["SUN","PRE-LOAD","2950"],["MON","BENCH PR","2950"],["TUE","DL PR","2950"],["WED","SQ PR","2950"],["THU","REST","2000"],["FRI","D4","2600"],["SAT","D5","2600"]],"Maintenance on PR days = glycogen loaded = better 1RM. One day at maintenance = zero impact on fat loss."],
-];
-
-function Chip({children,bg="#F97316",fg="#000"}){
-  return <span style={{padding:"2px 7px",background:bg,color:fg,borderRadius:4,fontSize:7,fontWeight:700,letterSpacing:1}}>{children}</span>;
+function h(tag,attrs,children){
+  var el=document.createElement(tag);
+  if(attrs)Object.keys(attrs).forEach(function(k){
+    if(k==='style'&&typeof attrs[k]==='object'){Object.assign(el.style,attrs[k]);}
+    else if(k==='className'){el.className=attrs[k];}
+    else{el.setAttribute(k,attrs[k]);}
+  });
+  if(children){
+    (Array.isArray(children)?children:[children]).forEach(function(c){
+      if(c==null||c===false)return;
+      if(typeof c==='string'||typeof c==='number'){el.appendChild(document.createTextNode(c));}
+      else{el.appendChild(c);}
+    });
+  }
+  return el;
 }
 
-function Card({children,bg="rgba(34,211,238,0.04)",border="rgba(34,211,238,0.15)",style={}}){
-  return <div style={{background:bg,border:`1px solid ${border}`,borderRadius:12,padding:"14px 14px",marginBottom:10,...style}}>{children}</div>;
+function card(cls,children){
+  var d=document.createElement('div');
+  d.className='card'+(cls?' '+cls:'');
+  if(Array.isArray(children))children.forEach(function(c){if(c)d.appendChild(c)});
+  else if(children)d.appendChild(children);
+  return d;
 }
 
-function ProfilePage(){
-  const now = Date.now();
-  const dtPeak = Math.max(0,Math.ceil((PEAK_MS-now)/86400000));
-  const dtFull = Math.max(0,Math.ceil((FULL_MS-now)/86400000));
-  const totalD = Math.ceil((FULL_MS-START_MS)/86400000);
-  const elapsed = Math.max(0,Math.ceil((now-START_MS)/86400000));
-  const pct = Math.min(100,Math.max(0,(elapsed/totalD)*100));
-
-  return <div style={{padding:"14px 12px",maxWidth:560,margin:"0 auto"}}>
-
-    {/* HERO */}
-    <div style={{background:"linear-gradient(135deg,#111,#0E0E0E,#161616)",border:"1px solid #1E1E1E",borderRadius:14,padding:"18px 16px",marginBottom:10,position:"relative",overflow:"hidden"}}>
-      <div style={{position:"absolute",top:-20,right:-20,width:150,height:150,borderRadius:"50%",background:"radial-gradient(circle,rgba(249,115,22,0.08),transparent 70%)"}}/>
-      <div style={{fontSize:8,letterSpacing:3,color:"#F97316",marginBottom:2}}>STARTED 21 MAR 2026</div>
-      <div className="bb" style={{fontSize:28,letterSpacing:3,color:"#F1F5F9",lineHeight:1,marginBottom:2}}>MAD AESTHETIC BY SUMMER</div>
-      <div style={{fontSize:9,color:"#6B7280",marginBottom:14}}>19yo Indian male · Robotics Engineering</div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
-        {[[dtPeak,"DAYS TO SUMMER PEAK","4 JUL · 12% BF","#F97316","rgba(249,115,22,0.08)","rgba(249,115,22,0.25)"],[dtFull,"DAYS TO FULL GOAL","8 AUG · 10% BF","#F43F5E","rgba(244,63,94,0.06)","rgba(244,63,94,0.2)"]].map(([n,l,sub,c,bg,br])=>(
-          <div key={l} style={{background:bg,border:`1px solid ${br}`,borderRadius:10,padding:"12px 8px",textAlign:"center"}}>
-            <div className="bb" style={{fontSize:42,color:c,lineHeight:1}}>{n}</div>
-            <div style={{fontSize:8,letterSpacing:1,color:c,marginTop:2}}>{l}</div>
-            <div style={{fontSize:7,color:"#4B5563",marginTop:1}}>{sub}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{marginBottom:10}}>
-        <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,fontSize:7,color:"#4B5563"}}>
-          <span style={{color:"#4ADE80"}}>START: 21 MAR</span>
-          <span style={{color:"#F97316"}}>PEAK: 4 JUL</span>
-          <span style={{color:"#F43F5E"}}>FULL: 8 AUG</span>
-        </div>
-        <div style={{background:"#1A1A1A",borderRadius:99,height:7,overflow:"hidden"}}>
-          <div style={{height:"100%",width:`${pct}%`,borderRadius:99,background:"linear-gradient(90deg,#4ADE80,#FBBF24,#F97316)"}}/>
-        </div>
-        <div style={{textAlign:"right",fontSize:7,color:"#4B5563",marginTop:2}}>Day {elapsed} of {totalD}</div>
-      </div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:5}}>
-        {[["WEIGHT","88kg"],["BF","~20%"],["TARGET","~78kg"],["GOAL BF","10%"]].map(([l,v])=>(
-          <div key={l} style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:7,padding:"7px 4px",textAlign:"center"}}>
-            <div style={{fontSize:7,color:"#4B5563"}}>{l}</div>
-            <div className="bb" style={{fontSize:14,color:"#F1F5F9",marginTop:1}}>{v}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* LIFTS */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#4B5563",marginBottom:10}}>POWERLIFTING — CURRENT → GOAL</div>
-      {Object.entries(LIFTS).map(([lift,d])=>{
-        const pct=Math.round((d.cur/d.goal)*100);
-        const cols={bench:"#F97316",deadlift:"#F43F5E",squat:"#FBBF24"};
-        const c=cols[lift];
-        return <div key={lift} style={{marginBottom:12}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:4}}>
-            <div style={{display:"flex",gap:8,alignItems:"baseline"}}>
-              <span className="bb" style={{fontSize:12,color:c,letterSpacing:1}}>{lift.toUpperCase()}</span>
-              <span className="bb" style={{fontSize:20,color:"#F1F5F9"}}>{d.cur}kg</span>
-            </div>
-            <div style={{display:"flex",gap:5,alignItems:"baseline"}}>
-              <span style={{fontSize:8,color:"#4B5563"}}>GOAL</span>
-              <span className="bb" style={{fontSize:20,color:c}}>{d.goal}kg</span>
-              <span style={{fontSize:8,color:"#4B5563"}}>+{d.goal-d.cur}kg</span>
-            </div>
-          </div>
-          <div style={{background:"#1A1A1A",borderRadius:99,height:6,overflow:"hidden"}}>
-            <div style={{height:"100%",width:`${pct}%`,borderRadius:99,background:c}}/>
-          </div>
-          <div style={{textAlign:"right",fontSize:7,color:c,marginTop:2}}>{pct}% to goal</div>
-        </div>;
-      })}
-    </div>
-
-    {/* ROADMAP */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#4B5563",marginBottom:10}}>20-WEEK ROADMAP</div>
-      {BLOCKS.map((b,i)=>(
-        <div key={i} style={{background:b.peak?"rgba(249,115,22,0.06)":"#141414",borderRadius:8,padding:"10px 12px",marginBottom:6,borderLeft:`3px solid ${b.c}`}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
-            <div>
-              <div className="bb" style={{fontSize:14,color:b.c,letterSpacing:1}}>{b.name}{b.peak&&<span style={{fontSize:9,marginLeft:6,color:"#F97316"}}>← SUMMER PEAK</span>}</div>
-              <div style={{fontSize:10,color:"#E5E7EB",fontWeight:600}}>{b.focus}</div>
-              <div style={{fontSize:8,color:"#4B5563",marginTop:1}}>{b.label}</div>
-            </div>
-            <div style={{textAlign:"right"}}>
-              <div style={{fontSize:9,color:b.c}}>{b.bf}</div>
-              <div style={{fontSize:9,color:b.c}}>{b.wt}</div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    {/* MILESTONES */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#4B5563",marginBottom:10}}>ALL MILESTONES</div>
-      {MILESTONES.map((m,i)=>(
-        <div key={i} style={{background:"#141414",border:`1px solid ${m.lift?"rgba(249,115,22,0.2)":"#1E1E1E"}`,borderRadius:7,padding:"8px 10px",marginBottom:5,display:"flex",gap:10,alignItems:"center"}}>
-          <span style={{fontSize:18}}>{m.icon}</span>
-          <div style={{flex:1}}>
-            <div style={{fontSize:10,color:"#E5E7EB",fontWeight:600}}>{m.label}</div>
-            <div style={{fontSize:8,color:m.lift?"#F97316":"#4ADE80",marginTop:1}}>{m.target}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    {/* AESTHETIC GOALS */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#4B5563",marginBottom:8}}>AESTHETIC GOALS</div>
-      <div style={{fontSize:8,letterSpacing:1,color:"#F97316",marginBottom:5}}>PRIMARY FOCUS</div>
-      {AGOALS.filter(g=>g.pri).map((g,i)=>(
-        <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",background:"rgba(249,115,22,0.06)",border:"1px solid rgba(249,115,22,0.15)",borderRadius:7,padding:"8px 10px",marginBottom:4}}>
-          <div style={{width:5,height:5,borderRadius:"50%",background:"#F97316",flexShrink:0,marginTop:3}}/>
-          <span style={{fontSize:10,color:"#F1F5F9"}}>{g.text}</span>
-        </div>
-      ))}
-      <div style={{fontSize:8,letterSpacing:1,color:"#4B5563",margin:"8px 0 5px"}}>ALSO ENHANCING</div>
-      {AGOALS.filter(g=>!g.pri).map((g,i)=>(
-        <div key={i} style={{display:"flex",gap:8,alignItems:"center",background:"#141414",border:"1px solid #1E1E1E",borderRadius:7,padding:"8px 10px",marginBottom:4}}>
-          <div style={{width:5,height:5,borderRadius:"50%",background:"#4B5563",flexShrink:0}}/>
-          <span style={{fontSize:10,color:"#9CA3AF"}}>{g.text}</span>
-        </div>
-      ))}
-    </div>
-
-    {/* CALISTHENICS GOALS */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#4B5563",marginBottom:10}}>CALISTHENICS SKILLS ROADMAP</div>
-      {[1,2,3,4].map(tier=>{
-        const items=CGOALS.filter(g=>g.tier===tier);
-        const tl={1:"TIER 1 — BLOCK 1–2",2:"TIER 2 — BLOCK 2–3",3:"TIER 3 — BLOCK 3–4",4:"TIER 4 — LONG TERM"};
-        const tc={1:"#4ADE80",2:"#FBBF24",3:"#F97316",4:"#A78BFA"};
-        return <div key={tier} style={{marginBottom:10}}>
-          <div style={{fontSize:8,letterSpacing:1,color:tc[tier],marginBottom:5}}>{tl[tier]}</div>
-          {items.map((g,i)=>(
-            <div key={i} style={{background:"#141414",borderLeft:`3px solid ${tc[tier]}`,borderRadius:7,padding:"8px 10px",marginBottom:4,display:"flex",gap:10}}>
-              <span style={{fontSize:18}}>{g.icon}</span>
-              <div>
-                <div style={{fontSize:10,color:"#E5E7EB",fontWeight:600}}>{g.label}</div>
-                <div style={{fontSize:8,color:"#F43F5E"}}>{g.cur}</div>
-                <div style={{fontSize:8,color:tc[tier],marginTop:1}}>Target: {g.tgt}</div>
-              </div>
-            </div>
-          ))}
-        </div>;
-      })}
-    </div>
-
-    {/* CALISTHENICS PROGRESSION */}
-    <div style={{background:"rgba(52,211,153,0.04)",border:"1px solid rgba(52,211,153,0.15)",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#34D399",marginBottom:8}}>🤸 HOW TO PROGRESS — CALISTHENICS</div>
-      <div style={{fontSize:9,color:"#6B7280",marginBottom:10,lineHeight:1.6}}>Core rule: <span style={{color:"#F1F5F9"}}>never progress until you own current variation.</span> Own = control, no strain, 1–2 reps in reserve.</div>
-      {CPROG.map((s,i)=>(
-        <div key={i} style={{background:"#141414",borderLeft:`3px solid ${s.c}`,borderRadius:8,padding:"10px 12px",marginBottom:7}}>
-          <div className="bb" style={{fontSize:13,color:s.c,letterSpacing:1,marginBottom:5}}>{s.skill}</div>
-          <div style={{display:"flex",gap:3,flexWrap:"wrap",marginBottom:5}}>
-            {s.steps.map((step,j)=>(
-              <span key={j} style={{padding:"2px 6px",background:"#0E0E0E",border:"1px solid #2A2A2A",borderRadius:4,fontSize:8,color:"#9CA3AF"}}>{j+1}. {step}</span>
-            ))}
-          </div>
-          <div style={{fontSize:8,color:s.c}}>↑ Progress when: {s.rule}</div>
-        </div>
-      ))}
-    </div>
-
-    {/* NUTRITION */}
-    <div style={{background:"rgba(34,211,238,0.04)",border:"1px solid rgba(34,211,238,0.15)",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#22D3EE",marginBottom:10}}>⚡ NUTRITION (DEFICIT)</div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:6,marginBottom:14}}>
-        {[["Maintenance","~2,950 kcal"],["Protein","176–194g/day"],["Weekly Loss","0.4–0.6 kg/wk"],["Calories","2,400–2,600"],["Carbs","220–270g/day"],["Fats","60–80g/day"]].map(([l,v])=>(
-          <div key={l} style={{background:"#0A0A0A",border:"1px solid #1A1A1A",borderRadius:7,padding:"8px 6px",textAlign:"center"}}>
-            <div style={{fontSize:7,color:"#4B5563"}}>{l}</div>
-            <div className="bb" style={{fontSize:12,color:"#22D3EE",marginTop:2}}>{v}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{fontSize:8,letterSpacing:1,color:"#22D3EE",marginBottom:8}}>CALORIES PER WEEK TYPE</div>
-      {CALS.map(([title,col,days,note])=>(
-        <div key={title} style={{marginBottom:12}}>
-          <div className="bb" style={{fontSize:11,color:col,letterSpacing:1,marginBottom:5}}>{title}</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:3}}>
-            {days.map(([d,s,c])=>(
-              <div key={d} style={{background:"#141414",borderRadius:5,padding:"5px 2px",textAlign:"center",borderTop:`2px solid ${s==="REST"?"#1E1E1E":col}`}}>
-                <div className="bb" style={{fontSize:9,color:s==="REST"?"#4B5563":col}}>{d}</div>
-                <div style={{fontSize:6,color:"#4B5563",margin:"1px 0"}}>{s}</div>
-                <div className="bb" style={{fontSize:11,color:"#F1F5F9"}}>{c}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{fontSize:8,color:"#4B5563",marginTop:3,lineHeight:1.5}}>{note}</div>
-        </div>
-      ))}
-      <div style={{fontSize:9,color:"#6B7280",lineHeight:1.8,marginTop:6}}>
-        <span style={{color:"#22D3EE"}}>Indian diet:</span> Dal+rice=complete protein+slow carbs. Chicken, paneer, eggs, curd. Curd before bed=casein.<br/>
-        <span style={{color:"#22D3EE"}}>Creatine:</span> 5g/day every day. Non-negotiable in a deficit.<br/>
-        <span style={{color:"#22D3EE"}}>Sleep:</span> 7.5–9hrs. Most anabolic tool you have as an engineering student.
-      </div>
-    </div>
-
-    {/* HONEST EXPECTATIONS */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:12,padding:"14px",marginBottom:10}}>
-      <div style={{fontSize:9,letterSpacing:2,color:"#4B5563",marginBottom:8}}>HONEST EXPECTATIONS</div>
-      <div style={{background:"rgba(249,115,22,0.07)",border:"1px solid rgba(249,115,22,0.2)",borderRadius:8,padding:"10px 12px",marginBottom:10}}>
-        <div style={{fontSize:8,color:"#F97316",marginBottom:5}}>⚠️ JULY 4 — THE REAL MATHS</div>
-        <div style={{fontSize:9,color:"#E5E7EB",lineHeight:1.8}}>
-          <span style={{color:"#F97316"}}>Target:</span> 88kg/20%→~80kg/12% in 15 weeks.<br/>
-          <span style={{color:"#F97316"}}>Fat to lose:</span> ~8kg. At 0.5kg/wk=7.5kg. At 0.6kg/wk=9kg. <span style={{color:"#4ADE80"}}>✓ Achievable — zero room for consistent off-weeks.</span><br/>
-          <span style={{color:"#F97316"}}>Indian body type:</span> Central fat goes last. Arms/shoulders lean first (wk 6–10), abs at 13–14% (wk 10–14), Christmas tree at 12% (July).
-        </div>
-      </div>
-      <div style={{fontSize:9,color:"#6B7280",lineHeight:1.9}}>
-        <span style={{color:"#F1F5F9",fontWeight:600}}>Wk 1–5:</span> Scale drops 2–3kg. Bench past 110kg. Shoulder definition starts.<br/>
-        <span style={{color:"#F1F5F9",fontWeight:600}}>Wk 6–10:</span> Lats widen visibly. Face leans out. Deadlift 230kg+. People notice.<br/>
-        <span style={{color:"#F1F5F9",fontWeight:600}}>Wk 11–15:</span> Abs at 13–14%, clearly visible at 12%. Demon back + boulder shoulders. Bench 120kg+.<br/>
-        <span style={{color:"#F1F5F9",fontWeight:600}}>Wk 16–20:</span> 10% BF. Bench 130–140kg, deadlift 240–250kg, squat 185–200kg.<br/>
-        <span style={{color:"#F43F5E",fontWeight:600}}>What kills July goal:</span> Weekend overeating, skipping zone 2, underestimating calories.
-      </div>
-    </div>
-
-  </div>;
+function sectionTitle(text,color){
+  var d=document.createElement('div');
+  d.className='section-title';
+  if(color)d.style.color=color;
+  d.textContent=text;
+  return d;
 }
 
-function ProgramPage(){
-  const [day,setDay] = useState(0);
-  const [week,setWeek] = useState(0);
-  const d = DAYS[day];
-  const wm = WM[week];
-
-  return <div style={{padding:"14px 12px",maxWidth:560,margin:"0 auto"}}>
-
-    {/* WEEK SELECTOR */}
-    <div style={{marginBottom:14}}>
-      <div style={{fontSize:8,letterSpacing:2,color:"#4B5563",marginBottom:6}}>SELECT WEEK</div>
-      <div style={{display:"flex",gap:5}}>
-        {WM.map((wk,i)=>{
-          const active=week===i;
-          return <button key={i} onClick={()=>setWeek(i)} style={{
-            flex:1,padding:"8px 2px",border:"none",borderRadius:7,
-            background:active?wk.c:"#111",color:active?"#000":"#555",
-            borderTop:`3px solid ${active?wk.c:"#222"}`,
-            display:"flex",flexDirection:"column",alignItems:"center",gap:1,
-          }}>
-            <span className="bb" style={{fontSize:18}}>{`W${i+1}`}</span>
-            <span style={{fontSize:6,letterSpacing:0.5}}>{wk.label}</span>
-          </button>;
-        })}
-      </div>
-      <div style={{marginTop:6,background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:7,padding:"8px 12px",display:"flex",gap:12,flexWrap:"wrap"}}>
-        {[["FOCUS",wm.label],["RPE",wm.rpe],["SCHEME",wm.scheme],["VOLUME",wm.vol]].map(([l,v])=>(
-          <div key={l}>
-            <div style={{fontSize:7,color:"#4B5563"}}>{l}</div>
-            <div className="bb" style={{fontSize:14,color:wm.c,letterSpacing:1}}>{v}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* DAY TABS */}
-    <div style={{display:"flex",gap:5,marginBottom:12,overflowX:"auto",paddingBottom:2}}>
-      {DAYS.map((dd,i)=>{
-        const active=day===i;
-        return <button key={i} onClick={()=>setDay(i)} style={{
-          padding:"7px 10px",border:`1px solid ${active?"#F97316":"#1E1E1E"}`,
-          borderRadius:7,background:active?"rgba(249,115,22,0.1)":"#0E0E0E",
-          color:active?"#F97316":"#6B7280",whiteSpace:"nowrap",flexShrink:0,
-        }}>
-          <span className="bb" style={{fontSize:12,letterSpacing:1}}>D{dd.id}·{dd.name}</span>
-        </button>;
-      })}
-    </div>
-
-    {/* DAY HEADER */}
-    <div style={{background:"linear-gradient(135deg,#111,#161616)",border:"1px solid #1E1E1E",borderRadius:11,padding:"14px",marginBottom:8}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:6,marginBottom:d.goals?10:0}}>
-        <div>
-          <div className="bb" style={{fontSize:22,letterSpacing:2,color:"#F1F5F9",lineHeight:1}}>DAY {d.id}: {d.name}</div>
-          <div style={{fontSize:10,color:"#9CA3AF",marginTop:3}}>{d.sub}</div>
-        </div>
-        <div style={{padding:"3px 8px",background:"#1A1A1A",border:"1px solid #2A2A2A",borderRadius:20,fontSize:7,letterSpacing:1,color:"#F97316",flexShrink:0}}>{d.tag}</div>
-      </div>
-      {d.muscles&&<div style={{fontSize:8,color:"#4B5563",marginBottom:6}}><span style={{color:"#2A2A2A"}}>MUSCLES: </span>{d.muscles}</div>}
-      {d.goals&&<div style={{display:"flex",flexWrap:"wrap",gap:4}}>
-        {d.goals.map((g,i)=>(
-          <span key={i} style={{padding:"2px 8px",background:"rgba(249,115,22,0.08)",border:"1px solid rgba(249,115,22,0.2)",borderRadius:99,fontSize:8,color:"#F97316"}}>✓ {g}</span>
-        ))}
-      </div>}
-    </div>
-
-    {/* EXERCISES */}
-    <div style={{display:"flex",flexDirection:"column",gap:7}}>
-      {d.ex.map((ex,idx)=>{
-        const wd=ex.w[week];
-        const tm=TM[ex.t];
-        return <div key={idx} style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:9,padding:"12px 13px",display:"grid",gridTemplateColumns:"1fr auto",alignItems:"start",gap:10}}>
-          <div>
-            <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4,flexWrap:"wrap"}}>
-              <Chip bg={tm.bg} fg={tm.fg}>{tm.label}</Chip>
-              <span style={{fontWeight:600,fontSize:13,color:"#F1F5F9"}}>{ex.n}</span>
-            </div>
-            <div style={{fontSize:10,color:"#6B7280",lineHeight:1.6}}>{wd.note}</div>
-          </div>
-          <div style={{textAlign:"center",minWidth:64}}>
-            <div style={{background:"#161616",border:"1px solid #252525",borderRadius:7,padding:"7px 8px"}}>
-              <div className="bb" style={{fontSize:17,color:wm.c,letterSpacing:1,lineHeight:1}}>{wd.s}×{wd.r}</div>
-              <div style={{fontSize:7,color:"#4B5563",letterSpacing:1,marginTop:1}}>SETS×REPS</div>
-            </div>
-          </div>
-        </div>;
-      })}
-    </div>
-
-    {/* LEGEND + BLOCK LOGIC */}
-    <div style={{marginTop:12,display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-      <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:10,padding:"12px"}}>
-        <div style={{fontSize:8,letterSpacing:2,color:"#4B5563",marginBottom:7}}>LEGEND</div>
-        {Object.entries(TM).map(([k,v])=>(
-          <div key={k} style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
-            <div style={{width:6,height:6,borderRadius:2,background:v.bg,flexShrink:0}}/>
-            <span style={{fontSize:9,color:"#6B7280"}}>{v.label}</span>
-          </div>
-        ))}
-      </div>
-      <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:10,padding:"12px"}}>
-        <div style={{fontSize:8,letterSpacing:2,color:"#4B5563",marginBottom:7}}>BLOCK LOGIC</div>
-        <div style={{fontSize:9,color:"#6B7280",lineHeight:1.9}}>
-          W1→W2: +2.5kg upper/+5kg lower<br/>
-          W3: Same W2 loads, fewer sets<br/>
-          W4: Drop to 60% — flush<br/>
-          W5: Pyramid to new 1RM<br/>
-          After W5: Reset, run heavier
-        </div>
-      </div>
-    </div>
-
-    {/* SCHEDULE */}
-    <div style={{background:"#0E0E0E",border:"1px solid #1A1A1A",borderRadius:10,padding:"12px",marginTop:8}}>
-      <div style={{fontSize:8,letterSpacing:2,color:"#4B5563",marginBottom:7}}>WEEKLY SCHEDULE</div>
-      <div style={{display:"flex",gap:4}}>
-        {[["MON","D1 PUSH"],["TUE","D2 PULL"],["WED","D3 LEGS"],["THU","REST"],["FRI","D4 SKILLS"],["SAT","D5 BACK"],["SUN","REST"]].map(([dy,s])=>(
-          <div key={dy} style={{flex:1,textAlign:"center",padding:"6px 2px",background:"#141414",borderRadius:5,border:"1px solid #1E1E1E"}}>
-            <div className="bb" style={{fontSize:10,color:"#F97316",letterSpacing:1}}>{dy}</div>
-            <div style={{fontSize:6,color:"#6B7280",marginTop:1}}>{s}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-  </div>;
+function progressBar(pct,color){
+  var track=h('div',{className:'progress-track'});
+  var fill=h('div',{className:'progress-fill',style:{width:pct+'%',background:color||'linear-gradient(90deg,#4ADE80,#FBBF24,#F97316)'}});
+  track.appendChild(fill);
+  return track;
 }
 
-function App(){
-  const [tab,setTab] = useState("profile");
-  return <div style={{fontFamily:"'Space Grotesk',sans-serif",background:"#080808",minHeight:"100vh",color:"#E5E7EB"}}>
-    <div style={{background:"#0C0C0C",borderBottom:"1px solid #1A1A1A",padding:"0 14px",position:"sticky",top:0,zIndex:100}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:12,paddingBottom:8}}>
-        <div>
-          <div className="bb" style={{fontSize:30,letterSpacing:4,color:"#F97316",lineHeight:1}}>IRONFORM</div>
-          <div style={{fontSize:7,letterSpacing:2,color:"#4B5563",marginTop:1}}>AESTHETICS · POWERLIFTING · STREETLIFTING · CALISTHENICS</div>
-        </div>
-      </div>
-      <div style={{display:"flex",borderTop:"1px solid #1A1A1A"}}>
-        {[["profile","🎯 PROFILE & GOALS"],["program","📋 PROGRAM"]].map(([t,label])=>(
-          <button key={t} onClick={()=>setTab(t)} style={{
-            padding:"9px 14px",background:"none",border:"none",
-            borderBottom:tab===t?"2px solid #F97316":"2px solid transparent",
-            color:tab===t?"#F97316":"#4B5563",fontSize:11,letterSpacing:1,marginBottom:-1,
-          }}>
-            <span className="bb" style={{letterSpacing:1}}>{label}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-    {tab==="profile"&&<ProfilePage/>}
-    {tab==="program"&&<ProgramPage/>}
-  </div>;
+function renderProfile(){
+  var now=Date.now();
+  var dtPeak=Math.max(0,Math.ceil((PEAK_MS-now)/86400000));
+  var dtFull=Math.max(0,Math.ceil((FULL_MS-now)/86400000));
+  var totalD=Math.ceil((FULL_MS-START_MS)/86400000);
+  var elapsed=Math.max(0,Math.ceil((now-START_MS)/86400000));
+  var pct=Math.min(100,Math.max(0,(elapsed/totalD)*100));
+
+  var frag=document.createDocumentFragment();
+
+  // HERO
+  var hero=document.createElement('div');
+  hero.id='hero';
+  hero.innerHTML='<div style="font-size:8px;letter-spacing:3px;color:#F97316;margin-bottom:2px">STARTED 21 MAR 2026</div>'+
+    '<div style="font-family:Impact,Arial Black,sans-serif;font-size:26px;letter-spacing:3px;color:#F1F5F9;line-height:1;margin-bottom:2px">MAD AESTHETIC BY SUMMER</div>'+
+    '<div style="font-size:9px;color:#6B7280;margin-bottom:14px">19yo Indian male · Robotics Engineering</div>';
+
+  var cdGrid=document.createElement('div');
+  cdGrid.className='countdown-grid';
+  [[dtPeak,'DAYS TO SUMMER PEAK','4 JUL · 12% BF','#F97316','rgba(249,115,22,0.08)','rgba(249,115,22,0.25)'],
+   [dtFull,'DAYS TO FULL GOAL','8 AUG · 10% BF','#F43F5E','rgba(244,63,94,0.06)','rgba(244,63,94,0.2)']].forEach(function(x){
+    var box=document.createElement('div');
+    box.className='countdown-box';
+    box.style.background=x[4];
+    box.style.border='1px solid '+x[5];
+    box.innerHTML='<div class="countdown-num" style="color:'+x[3]+'">'+x[0]+'</div>'+
+      '<div class="countdown-label" style="color:'+x[3]+'">'+x[1]+'</div>'+
+      '<div class="countdown-sub">'+x[2]+'</div>';
+    cdGrid.appendChild(box);
+  });
+  hero.appendChild(cdGrid);
+
+  var pb=document.createElement('div');
+  pb.className='progress-bar-wrap';
+  pb.innerHTML='<div class="progress-labels"><span style="color:#4ADE80">START: 21 MAR</span><span style="color:#F97316">PEAK: 4 JUL</span><span style="color:#F43F5E">FULL: 8 AUG</span></div>';
+  var pt=document.createElement('div');pt.className='progress-track';
+  var pf=document.createElement('div');pf.className='progress-fill';pf.style.width=pct+'%';
+  pt.appendChild(pf);pb.appendChild(pt);
+  pb.innerHTML+='';//keep labels
+  var dayLabel=document.createElement('div');
+  dayLabel.style.cssText='text-align:right;font-size:7px;color:#4B5563;margin-top:2px';
+  dayLabel.textContent='Day '+elapsed+' of '+totalD;
+  pb.appendChild(pt);pb.appendChild(dayLabel);
+  hero.appendChild(pb);
+
+  var sg=document.createElement('div');sg.className='stats-grid';
+  [['WEIGHT','88kg'],['BF','~20%'],['TARGET','~78kg'],['GOAL BF','10%']].forEach(function(x){
+    sg.innerHTML+='<div class="stat-box"><div class="stat-label">'+x[0]+'</div><div class="stat-val">'+x[1]+'</div></div>';
+  });
+  hero.appendChild(sg);
+  frag.appendChild(hero);
+
+  // LIFTS
+  var liftsCard=card('',null);
+  liftsCard.appendChild(sectionTitle('POWERLIFTING — CURRENT → GOAL'));
+  Object.keys(LIFTS).forEach(function(lift){
+    var d=LIFTS[lift];
+    var pct2=Math.round((d.cur/d.goal)*100);
+    var row=document.createElement('div');row.className='lift-row';
+    row.innerHTML='<div class="lift-header">'+
+      '<div style="display:flex;gap:8px;align-items:baseline"><span class="lift-name" style="color:'+d.c+'">'+lift.toUpperCase()+'</span><span class="lift-cur">'+d.cur+'kg</span></div>'+
+      '<div style="display:flex;gap:5px;align-items:baseline"><span style="font-size:8px;color:#4B5563">GOAL</span><span class="lift-goal" style="color:'+d.c+'">'+d.goal+'kg</span><span style="font-size:8px;color:#4B5563">+'+(d.goal-d.cur)+'kg</span></div>'+
+      '</div>';
+    var pb2=progressBar(pct2,d.c);
+    row.appendChild(pb2);
+    var pl=document.createElement('div');pl.className='lift-pct';pl.style.color=d.c;pl.textContent=pct2+'% to goal';
+    row.appendChild(pl);
+    liftsCard.appendChild(row);
+  });
+  frag.appendChild(liftsCard);
+
+  // ROADMAP
+  var rmCard=card('',null);
+  rmCard.appendChild(sectionTitle('20-WEEK ROADMAP'));
+  BLOCKS.forEach(function(b){
+    var row=document.createElement('div');
+    row.className='block-row';
+    row.style.background=b.peak?'rgba(249,115,22,0.06)':'#141414';
+    row.style.borderLeft='3px solid '+b.c;
+    row.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+      '<div><div class="block-name" style="color:'+b.c+'">'+b.name+(b.peak?' <span style="font-size:9px;color:#F97316">← SUMMER PEAK</span>':'')+'</div>'+
+      '<div class="block-focus">'+b.focus+'</div><div class="block-label">'+b.label+'</div></div>'+
+      '<div style="text-align:right"><div style="font-size:9px;color:'+b.c+'">'+b.bf+'</div><div style="font-size:9px;color:'+b.c+'">'+b.wt+'</div></div></div>';
+    rmCard.appendChild(row);
+  });
+  frag.appendChild(rmCard);
+
+  // MILESTONES
+  var msCard=card('',null);
+  msCard.appendChild(sectionTitle('ALL MILESTONES'));
+  MILESTONES.forEach(function(m){
+    var row=document.createElement('div');
+    row.className='milestone-row';
+    row.style.border='1px solid '+(m.lift?'rgba(249,115,22,0.2)':'#1E1E1E');
+    row.innerHTML='<span class="milestone-icon">'+m.icon+'</span>'+
+      '<div><div class="milestone-label">'+m.label+'</div>'+
+      '<div class="milestone-target" style="color:'+(m.lift?'#F97316':'#4ADE80')+'">'+m.target+'</div></div>';
+    msCard.appendChild(row);
+  });
+  frag.appendChild(msCard);
+
+  // AESTHETIC GOALS
+  var agCard=card('',null);
+  agCard.appendChild(sectionTitle('AESTHETIC GOALS'));
+  var pt1=document.createElement('div');pt1.style.cssText='font-size:8px;letter-spacing:1px;color:#F97316;margin-bottom:5px';pt1.textContent='PRIMARY FOCUS';
+  agCard.appendChild(pt1);
+  AGOALS.filter(function(g){return g.pri}).forEach(function(g){
+    var row=document.createElement('div');
+    row.className='goal-chip';
+    row.style.background='rgba(249,115,22,0.06)';
+    row.style.border='1px solid rgba(249,115,22,0.15)';
+    row.innerHTML='<div class="goal-dot" style="background:#F97316"></div><span class="goal-text" style="color:#F1F5F9">'+g.text+'</span>';
+    agCard.appendChild(row);
+  });
+  var pt2=document.createElement('div');pt2.style.cssText='font-size:8px;letter-spacing:1px;color:#4B5563;margin:8px 0 5px';pt2.textContent='ALSO ENHANCING';
+  agCard.appendChild(pt2);
+  AGOALS.filter(function(g){return !g.pri}).forEach(function(g){
+    var row=document.createElement('div');
+    row.className='goal-chip';
+    row.style.background='#141414';
+    row.style.border='1px solid #1E1E1E';
+    row.innerHTML='<div class="goal-dot" style="background:#4B5563"></div><span class="goal-text" style="color:#9CA3AF">'+g.text+'</span>';
+    agCard.appendChild(row);
+  });
+  frag.appendChild(agCard);
+
+  // CALISTHENICS GOALS
+  var cgCard=card('',null);
+  cgCard.appendChild(sectionTitle('CALISTHENICS SKILLS ROADMAP'));
+  var tc={1:'#4ADE80',2:'#FBBF24',3:'#F97316',4:'#A78BFA'};
+  var tl={1:'TIER 1 — BLOCK 1–2',2:'TIER 2 — BLOCK 2–3',3:'TIER 3 — BLOCK 3–4',4:'TIER 4 — LONG TERM'};
+  [1,2,3,4].forEach(function(tier){
+    var tlDiv=document.createElement('div');tlDiv.style.cssText='font-size:8px;letter-spacing:1px;color:'+tc[tier]+';margin-bottom:5px;margin-top:'+(tier>1?'8px':'0');
+    tlDiv.textContent=tl[tier];cgCard.appendChild(tlDiv);
+    CGOALS.filter(function(g){return g.tier===tier}).forEach(function(g){
+      var row=document.createElement('div');
+      row.className='tier-item';
+      row.style.borderLeftColor=tc[tier];
+      row.style.background='#141414';
+      row.style.border='1px solid #1E1E1E';
+      row.style.borderLeft='3px solid '+tc[tier];
+      row.innerHTML='<span style="font-size:18px">'+g.icon+'</span><div><div style="font-size:10px;color:#E5E7EB;font-weight:600">'+g.label+'</div><div style="font-size:8px;color:#F43F5E">'+g.cur+'</div><div style="font-size:8px;color:'+tc[tier]+'">Target: '+g.tgt+'</div></div>';
+      cgCard.appendChild(row);
+    });
+  });
+  frag.appendChild(cgCard);
+
+  // CALISTHENICS PROGRESSION
+  var cpCard=card('card-green',null);
+  cpCard.appendChild(sectionTitle('🤸 HOW TO PROGRESS — CALISTHENICS','#34D399'));
+  var cpNote=document.createElement('div');cpNote.style.cssText='font-size:9px;color:#6B7280;margin-bottom:10px;line-height:1.6';
+  cpNote.innerHTML='Core rule: <span style="color:#F1F5F9">never progress until you own current variation.</span>';
+  cpCard.appendChild(cpNote);
+  CPROG.forEach(function(s){
+    var div=document.createElement('div');div.className='skill-prog';div.style.borderLeftColor=s.c;div.style.background='#141414';
+    var name=document.createElement('div');name.className='skill-name';name.style.color=s.c;name.textContent=s.skill;div.appendChild(name);
+    var steps=document.createElement('div');steps.className='skill-steps';
+    s.steps.forEach(function(step,j){
+      var sp=document.createElement('span');sp.className='skill-step';sp.textContent=(j+1)+'. '+step;steps.appendChild(sp);
+    });
+    div.appendChild(steps);
+    var rule=document.createElement('div');rule.className='skill-rule';rule.style.color=s.c;rule.textContent='↑ Progress when: '+s.rule;div.appendChild(rule);
+    cpCard.appendChild(div);
+  });
+  frag.appendChild(cpCard);
+
+  // NUTRITION
+  var nutCard=card('card-cyan',null);
+  nutCard.appendChild(sectionTitle('⚡ NUTRITION (DEFICIT)','#22D3EE'));
+  var ng=document.createElement('div');ng.className='nut-grid';
+  [['Maintenance','~2,950 kcal'],['Protein','176–194g/day'],['Weekly Loss','0.4–0.6 kg/wk'],['Calories','2,400–2,600'],['Carbs','220–270g/day'],['Fats','60–80g/day']].forEach(function(x){
+    ng.innerHTML+='<div class="nut-box"><div class="nut-label">'+x[0]+'</div><div class="nut-val">'+x[1]+'</div></div>';
+  });
+  nutCard.appendChild(ng);
+  var calTitle=document.createElement('div');calTitle.style.cssText='font-size:8px;letter-spacing:1px;color:#22D3EE;margin-bottom:8px';calTitle.textContent='CALORIES PER WEEK TYPE';
+  nutCard.appendChild(calTitle);
+  CALS.forEach(function(cal){
+    var cw=document.createElement('div');cw.className='cal-week';
+    var ct=document.createElement('div');ct.className='cal-title';ct.style.color=cal[1];ct.textContent=cal[0];cw.appendChild(ct);
+    var cd=document.createElement('div');cd.className='cal-days';
+    cal[2].forEach(function(day){
+      var isRest=day[1]==='REST';
+      cd.innerHTML+='<div class="cal-day" style="border-top:2px solid '+(isRest?'#1E1E1E':cal[1])+'">'+
+        '<div class="cal-d" style="color:'+(isRest?'#4B5563':cal[1])+'">'+day[0]+'</div>'+
+        '<div class="cal-s">'+day[1]+'</div>'+
+        '<div class="cal-c">'+day[2]+'</div></div>';
+    });
+    cw.appendChild(cd);
+    var cn=document.createElement('div');cn.style.cssText='font-size:8px;color:#4B5563;margin-top:3px;line-height:1.5';cn.textContent=cal[3];cw.appendChild(cn);
+    nutCard.appendChild(cw);
+  });
+  var nutNote=document.createElement('div');nutNote.style.cssText='font-size:9px;color:#6B7280;line-height:1.8;margin-top:6px';
+  nutNote.innerHTML='<span style="color:#22D3EE">Indian diet:</span> Dal+rice=complete protein+slow carbs. Chicken, paneer, eggs, curd. Curd before bed=casein.<br><span style="color:#22D3EE">Creatine:</span> 5g/day every day. Non-negotiable in a deficit.<br><span style="color:#22D3EE">Sleep:</span> 7.5–9hrs. Most anabolic tool you have.';
+  nutCard.appendChild(nutNote);
+  frag.appendChild(nutCard);
+
+  // EXPECTATIONS
+  var expCard=card('',null);
+  expCard.appendChild(sectionTitle('HONEST EXPECTATIONS'));
+  var mathBox=document.createElement('div');
+  mathBox.style.cssText='background:rgba(249,115,22,0.07);border:1px solid rgba(249,115,22,0.2);border-radius:8px;padding:10px 12px;margin-bottom:10px';
+  mathBox.innerHTML='<div style="font-size:8px;color:#F97316;margin-bottom:5px">⚠️ JULY 4 2026 — THE REAL MATHS</div>'+
+    '<div style="font-size:9px;color:#E5E7EB;line-height:1.8"><span style="color:#F97316">Target:</span> 88kg/20%→~80kg/12% in 15 weeks.<br>'+
+    '<span style="color:#F97316">Fat to lose:</span> ~8kg at 0.5kg/wk. <span style="color:#4ADE80">✓ Achievable — zero room for consistent off-weeks.</span><br>'+
+    '<span style="color:#F97316">Indian body type:</span> Central fat goes last. Arms/shoulders lean first (wk 6–10), abs at 13–14% (wk 10–14), Christmas tree at 12% (July).</div>';
+  expCard.appendChild(mathBox);
+  var expText=document.createElement('div');
+  expText.style.cssText='font-size:9px;color:#6B7280;line-height:1.9';
+  expText.innerHTML='<span style="color:#F1F5F9;font-weight:600">Wk 1–5:</span> Scale drops 2–3kg. Bench past 110kg. Shoulder definition starts.<br>'+
+    '<span style="color:#F1F5F9;font-weight:600">Wk 6–10:</span> Lats widen visibly. Face leans out. Deadlift 230kg+. People notice.<br>'+
+    '<span style="color:#F1F5F9;font-weight:600">Wk 11–15:</span> Abs appearing at 13–14%, visible at 12%. Demon back + boulder shoulders. Bench 120kg+.<br>'+
+    '<span style="color:#F1F5F9;font-weight:600">Wk 16–20:</span> 10% BF. Bench 130–140kg, deadlift 240–250kg, squat 185–200kg.<br>'+
+    '<span style="color:#F43F5E;font-weight:600">What kills July goal:</span> Weekend overeating, skipping zone 2, underestimating calories.';
+  expCard.appendChild(expText);
+  frag.appendChild(expCard);
+
+  return frag;
 }
 
-ReactDOM.createRoot(document.getElementById("app")).render(<App/>);
+function renderProgram(){
+  var frag=document.createDocumentFragment();
+  var wm=WM[currentWeek];
+  var d=DAYS[currentDay];
+
+  // WEEK SELECTOR
+  var ws=document.createElement('div');ws.className='week-selector';
+  var wl=document.createElement('div');wl.className='section-title';wl.textContent='SELECT WEEK';ws.appendChild(wl);
+  var wbtns=document.createElement('div');wbtns.className='week-btns';
+  WM.forEach(function(w,i){
+    var active=i===currentWeek;
+    var btn=document.createElement('button');
+    btn.className='week-btn';
+    btn.style.background=active?w.c:'#111';
+    btn.style.color=active?'#000':'#555';
+    btn.style.borderTopColor=active?w.c:'#222';
+    btn.innerHTML='<span class="week-btn-num">W'+(i+1)+'</span><span class="week-btn-label">'+w.label+'</span>';
+    btn.onclick=(function(idx){return function(){currentWeek=idx;refreshProgram();};})(i);
+    wbtns.appendChild(btn);
+  });
+  ws.appendChild(wbtns);
+  var wmeta=document.createElement('div');wmeta.className='week-meta';
+  [['FOCUS',wm.label],['RPE',wm.rpe],['SCHEME',wm.scheme],['VOLUME',wm.vol]].forEach(function(x){
+    wmeta.innerHTML+='<div class="week-meta-item"><div class="wm-label">'+x[0]+'</div><div class="wm-val" style="color:'+wm.c+'">'+x[1]+'</div></div>';
+  });
+  ws.appendChild(wmeta);
+  frag.appendChild(ws);
+
+  // DAY TABS
+  var dt=document.createElement('div');dt.className='day-tabs';
+  DAYS.forEach(function(day,i){
+    var btn=document.createElement('button');
+    btn.className='day-tab'+(i===currentDay?' active':'');
+    btn.textContent='D'+day.id+'·'+day.name;
+    btn.onclick=(function(idx){return function(){currentDay=idx;refreshProgram();};})(i);
+    dt.appendChild(btn);
+  });
+  frag.appendChild(dt);
+
+  // DAY HEADER
+  var dh=document.createElement('div');dh.className='day-header';
+  var dhTop=document.createElement('div');dhTop.style.cssText='display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:'+(d.goals?'10px':'0');
+  dhTop.innerHTML='<div><div class="day-name">DAY '+d.id+': '+d.name+'</div><div class="day-sub">'+d.sub+'</div></div>'+
+    '<div class="day-tag">'+d.tag+'</div>';
+  dh.appendChild(dhTop);
+  if(d.muscles){var dm=document.createElement('div');dm.className='day-muscles';dm.innerHTML='<span style="color:#2A2A2A">MUSCLES: </span>'+d.muscles;dh.appendChild(dm);}
+  if(d.goals){
+    var dg=document.createElement('div');dg.className='day-goals';
+    d.goals.forEach(function(g){dg.innerHTML+='<span class="day-goal-chip">✓ '+g+'</span>';});
+    dh.appendChild(dg);
+  }
+  frag.appendChild(dh);
+
+  // EXERCISES
+  var exWrap=document.createElement('div');
+  d.ex.forEach(function(ex){
+    var wd=ex.w[currentWeek];
+    var tm=TM[ex.t];
+    var card2=document.createElement('div');card2.className='ex-card';
+    var left=document.createElement('div');
+    var header=document.createElement('div');header.style.cssText='display:flex;align-items:center;flex-wrap:wrap;margin-bottom:4px';
+    var chip=document.createElement('span');chip.className='ex-type';chip.style.background=tm.bg;chip.style.color=tm.fg;chip.textContent=tm.label;
+    var name=document.createElement('span');name.className='ex-name';name.textContent=ex.n;
+    header.appendChild(chip);header.appendChild(name);left.appendChild(header);
+    var note=document.createElement('div');note.className='ex-note';note.textContent=wd.note;left.appendChild(note);
+    var right=document.createElement('div');
+    var sb=document.createElement('div');sb.className='sets-box';
+    var sn=document.createElement('div');sn.className='sets-num';sn.style.color=wm.c;sn.textContent=wd.s+'×'+wd.r;
+    var sl=document.createElement('div');sl.className='sets-label';sl.textContent='SETS×REPS';
+    sb.appendChild(sn);sb.appendChild(sl);right.appendChild(sb);
+    card2.appendChild(left);card2.appendChild(right);
+    exWrap.appendChild(card2);
+  });
+  frag.appendChild(exWrap);
+
+  // LEGEND + BLOCK LOGIC
+  var lgrid=document.createElement('div');lgrid.className='legend-grid';
+  var lcard=document.createElement('div');lcard.className='card';lcard.style.margin='0';
+  lcard.appendChild(sectionTitle('LEGEND'));
+  Object.keys(TM).forEach(function(k){
+    var v=TM[k];
+    lcard.innerHTML+='<div class="legend-item"><div class="legend-dot" style="background:'+v.bg+'"></div><span style="font-size:9px;color:#6B7280">'+v.label+'</span></div>';
+  });
+  var bcard=document.createElement('div');bcard.className='card';bcard.style.margin='0';
+  bcard.appendChild(sectionTitle('BLOCK LOGIC'));
+  bcard.innerHTML+='<div style="font-size:9px;color:#6B7280;line-height:1.9">W1→W2: +2.5kg upper/+5kg lower<br>W3: Same W2 loads, fewer sets<br>W4: Drop to 60% — flush<br>W5: Pyramid to new 1RM<br>After W5: Reset, run heavier</div>';
+  lgrid.appendChild(lcard);lgrid.appendChild(bcard);
+  frag.appendChild(lgrid);
+
+  // SCHEDULE
+  var sched=document.createElement('div');sched.className='sched';
+  sched.appendChild(sectionTitle('WEEKLY SCHEDULE'));
+  var sd=document.createElement('div');sd.className='sched-days';
+  [['MON','D1 PUSH'],['TUE','D2 PULL'],['WED','D3 LEGS'],['THU','REST'],['FRI','D4 SKILLS'],['SAT','D5 AESTHETICS'],['SUN','REST']].forEach(function(x){
+    sd.innerHTML+='<div class="sched-day"><div class="sched-d">'+x[0]+'</div><div class="sched-s">'+x[1]+'</div></div>';
+  });
+  sched.appendChild(sd);
+  frag.appendChild(sched);
+
+  return frag;
+}
+
+function refreshProgram(){
+  var content=document.getElementById('content');
+  content.innerHTML='';
+  content.appendChild(renderProgram());
+}
+
+function showTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.tab-btn')[tab==='profile'?0:1].classList.add('active');
+  var content=document.getElementById('content');
+  content.innerHTML='';
+  if(tab==='profile'){content.appendChild(renderProfile());}
+  else{content.appendChild(renderProgram());}
+}
+
+function init(){
+  showTab('profile');
+}
 </script>
 </body>
 </html>
